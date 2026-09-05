@@ -177,16 +177,21 @@
   .lightbox img{max-width:100%;max-height:88vh;object-fit:contain;border-radius:2px;}
   .lightbox-close{position:absolute;top:20px;inset-inline-end:20px;color:#fff;font-size:30px;background:none;border:none;cursor:pointer;}
 
-  /* Certifications */
-  .certs{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;}
-  .cert-card{
-    border:1px dashed rgba(255,255,255,.22);border-radius:4px;padding:26px 20px;
-    display:flex;flex-direction:column;align-items:flex-start;gap:12px;min-height:150px;
-    background:rgba(255,255,255,.02);
+  /* Certifications preview */
+  .cert-preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px;}
+  .cert-preview-card{background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:hidden;transition:transform .25s ease,border-color .25s ease;}
+  .cert-preview-card:hover{transform:translateY(-3px);border-color:rgba(226,19,19,.4);}
+  .cert-preview-card img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:top;background:#fff;}
+  .cpc-body{padding:11px 13px 13px;}
+  .cpc-title{font-size:12.5px;font-weight:600;color:#fff;line-height:1.3;}
+  .cpc-provider{font-size:10.5px;color:var(--fg-dim);margin-top:4px;}
+  .btn-outline-full{
+    display:flex;align-items:center;justify-content:center;gap:9px;width:100%;
+    border:1px solid var(--line);color:var(--fg);text-decoration:none;font-weight:600;font-size:14px;
+    padding:14px;border-radius:4px;transition:border-color .2s ease,color .2s ease;
   }
-  .cert-card svg{color:var(--red);}
-  .cert-card .cert-title{font-size:14.5px;font-weight:600;color:#fff;}
-  .cert-card .cert-status{font-size:12.5px;color:var(--fg-dim);}
+  .btn-outline-full:hover{border-color:var(--red);color:#fff;}
+  @media(max-width:480px){ .cert-preview-grid{grid-template-columns:repeat(3,1fr);gap:8px;} .cpc-body{padding:7px 8px 9px;} .cpc-title{font-size:10.5px;} .cpc-provider{display:none;} }
 
   /* Custom form */
   .form-grid{display:flex;flex-direction:column;gap:16px;max-width:520px;}
@@ -258,8 +263,8 @@
     <a href="portfolio.html" class="lang-block" data-lang="en">Work We've Done</a>
     <a href="portfolio.html" class="lang-block" data-lang="ar" hidden>أعمالنا</a>
 
-    <a href="#certifications" onclick="closeDrawer()" class="lang-block" data-lang="en">Certifications</a>
-    <a href="#certifications" onclick="closeDrawer()" class="lang-block" data-lang="ar" hidden>الشهادات</a>
+    <a href="certifications.html" class="lang-block" data-lang="en">Certifications</a>
+    <a href="certifications.html" class="lang-block" data-lang="ar" hidden>الشهادات</a>
 
     <a href="#custom-request" onclick="closeDrawer()" class="lang-block" data-lang="en">Custom Request</a>
     <a href="#custom-request" onclick="closeDrawer()" class="lang-block" data-lang="ar" hidden>طلب خاص</a>
@@ -459,32 +464,40 @@
       <span class="section-eyebrow lang-block" data-lang="ar" hidden>المؤهلات</span>
       <h2 class="lang-block" data-lang="en">Certifications</h2>
       <h2 class="lang-block" data-lang="ar" hidden>الشهادات</h2>
-      <p class="lang-block" data-lang="en">Professional training and safety certifications — added soon.</p>
-      <p class="lang-block" data-lang="ar" hidden>التدريب المهني وشهادات السلامة — قريباً.</p>
+      <p class="lang-block" data-lang="en">43 certifications from Shimano T.E.C. and specialized suspension training.</p>
+      <p class="lang-block" data-lang="ar" hidden>43 شهادة من Shimano T.E.C. وتدريب متخصص في أنظمة التعليق.</p>
     </div>
-    <div class="certs reveal">
-      <div class="cert-card">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="5"/><path d="M8 13l-2 8 6-3 6 3-2-8"/></svg>
-        <div class="cert-title lang-block" data-lang="en">Technical certification</div>
-        <div class="cert-title lang-block" data-lang="ar" hidden>شهادة فنية</div>
-        <div class="cert-status lang-block" data-lang="en">Coming soon</div>
-        <div class="cert-status lang-block" data-lang="ar" hidden>قريباً</div>
+    <div class="cert-preview-grid reveal">
+      <div class="cert-preview-card">
+        <img src="cert-media/cert-01-thumb.jpg" loading="lazy" alt="Suspension service certification">
+        <div class="cpc-body">
+          <div class="cpc-title lang-block" data-lang="en">Shock &amp; Suspension Service</div>
+          <div class="cpc-title lang-block" data-lang="ar" hidden>خدمة نظام التعليق</div>
+          <div class="cpc-provider">Thiago Mecânico</div>
+        </div>
       </div>
-      <div class="cert-card">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="5"/><path d="M8 13l-2 8 6-3 6 3-2-8"/></svg>
-        <div class="cert-title lang-block" data-lang="en">Suspension specialist</div>
-        <div class="cert-title lang-block" data-lang="ar" hidden>أخصائي التعليق</div>
-        <div class="cert-status lang-block" data-lang="en">Coming soon</div>
-        <div class="cert-status lang-block" data-lang="ar" hidden>قريباً</div>
+      <div class="cert-preview-card">
+        <img src="cert-media/cert-25-thumb.jpg" loading="lazy" alt="Road Di2 drivetrain certification">
+        <div class="cpc-body">
+          <div class="cpc-title lang-block" data-lang="en">Road — Di2 Drivetrain</div>
+          <div class="cpc-title lang-block" data-lang="ar" hidden>دراجة الطريق — نظام Di2</div>
+          <div class="cpc-provider">Shimano T.E.C.</div>
+        </div>
       </div>
-      <div class="cert-card">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="5"/><path d="M8 13l-2 8 6-3 6 3-2-8"/></svg>
-        <div class="cert-title lang-block" data-lang="en">Safety training</div>
-        <div class="cert-title lang-block" data-lang="ar" hidden>تدريب السلامة</div>
-        <div class="cert-status lang-block" data-lang="en">Coming soon</div>
-        <div class="cert-status lang-block" data-lang="ar" hidden>قريباً</div>
+      <div class="cert-preview-card">
+        <img src="cert-media/cert-20-thumb.jpg" loading="lazy" alt="MTB XTR certification">
+        <div class="cpc-body">
+          <div class="cpc-title lang-block" data-lang="en">MTB — Shimano XTR</div>
+          <div class="cpc-title lang-block" data-lang="ar" hidden>دراجة جبلية — Shimano XTR</div>
+          <div class="cpc-provider">Shimano T.E.C.</div>
+        </div>
       </div>
     </div>
+    <a href="certifications.html" class="btn btn-outline-full">
+      <span class="lang-block" data-lang="en">View all certifications</span>
+      <span class="lang-block" data-lang="ar" hidden>عرض جميع الشهادات</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
   </section>
 
   <hr class="divider">

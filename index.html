@@ -162,13 +162,14 @@
   .tier li svg{flex:0 0 auto;margin-top:3px;color:var(--red);}
   .tier-tag{margin-top:18px;font-size:12.5px;color:var(--fg-dim);}
 
-  /* Gallery */
-  .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
-  .gallery figure{margin:0;position:relative;overflow:hidden;cursor:pointer;background:#111;border-radius:4px;}
-  .gallery figure:first-child{grid-column:1 / -1;}
-  .gallery img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3;transition:transform .5s ease;}
-  .gallery figure:first-child img{aspect-ratio:16/9;}
-  .gallery figure:hover img{transform:scale(1.05);}
+  /* Gallery teaser */
+  .gallery-teaser{display:block;text-decoration:none;border:1px solid var(--line);border-radius:6px;overflow:hidden;transition:border-color .25s ease, transform .25s ease;}
+  .gallery-teaser:hover{border-color:rgba(226,19,19,.4);transform:translateY(-3px);}
+  .gt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--line);}
+  .gt-grid img{width:100%;height:100%;object-fit:cover;aspect-ratio:1/1;display:block;}
+  .gt-cta{display:flex;align-items:center;justify-content:center;gap:9px;padding:16px;background:var(--panel);color:#fff;font-weight:600;font-size:14.5px;}
+  body.lang-ar .gt-cta{font-family:'Tajawal',sans-serif;}
+  @media(min-width:520px){ .gt-grid{grid-template-columns:repeat(4,1fr);} }
 
   /* Lightbox */
   .lightbox{position:fixed;inset:0;background:rgba(5,5,5,.96);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s ease;}
@@ -254,8 +255,8 @@
     <a href="#services" onclick="closeDrawer()" class="lang-block" data-lang="en">Services</a>
     <a href="#services" onclick="closeDrawer()" class="lang-block" data-lang="ar" hidden>خدماتنا</a>
 
-    <a href="#gallery" onclick="closeDrawer()" class="lang-block" data-lang="en">Work We've Done</a>
-    <a href="#gallery" onclick="closeDrawer()" class="lang-block" data-lang="ar" hidden>أعمالنا</a>
+    <a href="portfolio.html" class="lang-block" data-lang="en">Work We've Done</a>
+    <a href="portfolio.html" class="lang-block" data-lang="ar" hidden>أعمالنا</a>
 
     <a href="#certifications" onclick="closeDrawer()" class="lang-block" data-lang="en">Certifications</a>
     <a href="#certifications" onclick="closeDrawer()" class="lang-block" data-lang="ar" hidden>الشهادات</a>
@@ -431,17 +432,22 @@
       <span class="section-eyebrow lang-block" data-lang="ar" hidden>أعمالنا</span>
       <h2 class="lang-block" data-lang="en">Services we've completed</h2>
       <h2 class="lang-block" data-lang="ar" hidden>الخدمات التي أنجزناها</h2>
-      <p class="lang-block" data-lang="en">A look at recent work across Abu Dhabi — real bikes, real results.</p>
-      <p class="lang-block" data-lang="ar" hidden>لمحة عن أعمالنا الأخيرة في أبوظبي — دراجات حقيقية، نتائج حقيقية.</p>
+      <p class="lang-block" data-lang="en">37+ bikes serviced across Abu Dhabi — see the full before/after gallery.</p>
+      <p class="lang-block" data-lang="ar" hidden>أكثر من 37 دراجة تمت صيانتها في أبوظبي — شاهد معرض الصور كاملاً.</p>
     </div>
-    <div class="gallery reveal">
-      <figure onclick="openLightbox('images/gallery-1.jpg')"><img src="images/gallery-1.jpg" loading="lazy" alt="Full bike disassembly service"></figure>
-      <figure onclick="openLightbox('images/gallery-3.jpg')"><img src="images/gallery-3.jpg" loading="lazy" alt="Road bike after service"></figure>
-      <figure onclick="openLightbox('images/gallery-4.jpg')"><img src="images/gallery-4.jpg" loading="lazy" alt="Bike ready after tune-up"></figure>
-      <figure onclick="openLightbox('images/gallery-2.jpg')"><img src="images/gallery-2.jpg" loading="lazy" alt="Rotors and bearings laid out for service"></figure>
-      <figure onclick="openLightbox('images/gallery-6.jpg')"><img src="images/gallery-6.jpg" loading="lazy" alt="Drivetrain components cleaned and organized"></figure>
-      <figure onclick="openLightbox('images/gallery-5.jpg')"><img src="images/gallery-5.jpg" loading="lazy" alt="Professional suspension service products"></figure>
-    </div>
+    <a href="portfolio.html" class="gallery-teaser reveal">
+      <div class="gt-grid">
+        <img src="portfolio-media/blackheart-3/00.jpg" loading="lazy" alt="Blackheart Level 3 service">
+        <img src="portfolio-media/colnago-c64-3/00.jpg" loading="lazy" alt="Colnago C64 Level 3 service">
+        <img src="portfolio-media/pinnarello-dogma-2/00.jpg" loading="lazy" alt="Pinarello Dogma Level 2 service">
+        <img src="portfolio-media/canyon-wash/00.jpg" loading="lazy" alt="Canyon Wash n Lube service">
+      </div>
+      <div class="gt-cta">
+        <span class="lang-block" data-lang="en">View full portfolio</span>
+        <span class="lang-block" data-lang="ar" hidden>عرض معرض الأعمال كاملاً</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </div>
+    </a>
   </section>
 
   <hr class="divider">
@@ -507,7 +513,11 @@
       <div class="field">
         <label class="lang-block" data-lang="en">What do you need?</label>
         <label class="lang-block" data-lang="ar" hidden>ما الذي تحتاجه؟</label>
-        <textarea id="f-message" required></textarea>
+        <select id="f-service" onchange="onServiceChange()" required></select>
+      </div>
+      <div class="field" id="f-note-field">
+        <label id="f-note-label" class="lang-block" data-lang="en">Additional notes (optional)</label>
+        <textarea id="f-message" placeholder=""></textarea>
       </div>
       <button type="submit" class="btn btn-primary form-submit">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Z"/></svg>
@@ -594,6 +604,9 @@
     document.getElementById('hero-wa-label').textContent = ctaText[lang].wa;
     document.getElementById('drawer-wa').href = waLink(lang);
     document.getElementById('drawer-wa-label').textContent = ctaText[lang].wa;
+
+    renderServiceOptions(lang);
+    onServiceChange();
   }
 
   function openDrawer(){
@@ -611,20 +624,59 @@
   }
   function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); }
 
+  const serviceOptions = [
+    { value: "wash",   en: "Wash 'n Lube",              ar: "غسيل وتشحيم" },
+    { value: "level2", en: "Level 2",                   ar: "المستوى الثاني" },
+    { value: "level3", en: "Level 3",                   ar: "المستوى الثالث" },
+    { value: "brakes", en: "Brake &amp; gear adjustment", ar: "ضبط الفرامل والتروس" },
+    { value: "other",  en: "Other service",             ar: "خدمة أخرى" },
+  ];
+  const servicePlaceholder = { en: "Select a service…", ar: "اختر الخدمة…" };
+  const noteLabels = {
+    normal: { en: "Additional notes (optional)", ar: "ملاحظات إضافية (اختياري)" },
+    other:  { en: "Please specify the service (required)", ar: "يرجى تحديد الخدمة (إلزامي)" },
+  };
+
+  function renderServiceOptions(lang){
+    const sel = document.getElementById('f-service');
+    const prevValue = sel.value;
+    sel.innerHTML = `<option value="" disabled ${prevValue?'':'selected'}>${servicePlaceholder[lang]}</option>` +
+      serviceOptions.map(o => `<option value="${o.value}" ${o.value===prevValue?'selected':''}>${o[lang]}</option>`).join('');
+  }
+
+  function onServiceChange(){
+    const val = document.getElementById('f-service').value;
+    const msg = document.getElementById('f-message');
+    const label = document.getElementById('f-note-label');
+    if(val === 'other'){
+      msg.required = true;
+      label.textContent = noteLabels.other[currentLang];
+    } else {
+      msg.required = false;
+      label.textContent = noteLabels.normal[currentLang];
+    }
+  }
+
   function submitCustomForm(e){
     e.preventDefault();
     const name = document.getElementById('f-name').value.trim();
     const bike = document.getElementById('f-bike').value.trim();
+    const serviceSel = document.getElementById('f-service');
+    const serviceVal = serviceSel.value;
+    const serviceLabel = serviceOptions.find(o => o.value === serviceVal);
+    const serviceText = serviceLabel ? serviceLabel[currentLang].replace('&amp;','&') : serviceVal;
     const msg = document.getElementById('f-message').value.trim();
     let text;
     if(currentLang === 'ar'){
       text = `مرحباً بايسيفول كير، اسمي ${name}.`;
       if(bike) text += ` دراجتي: ${bike}.`;
-      text += ` أحتاج: ${msg}`;
+      text += ` الخدمة المطلوبة: ${serviceText}.`;
+      if(msg) text += ` ملاحظات: ${msg}`;
     } else {
       text = `Hi Bicifull Care, my name is ${name}.`;
       if(bike) text += ` My bike: ${bike}.`;
-      text += ` I need: ${msg}`;
+      text += ` Service needed: ${serviceText}.`;
+      if(msg) text += ` Notes: ${msg}`;
     }
     window.open(waLink(currentLang, text), '_blank');
     return false;

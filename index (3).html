@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bicifull Care — Home Bike Service, Abu Dhabi</title>
+<meta name="description" content="Professional bike maintenance at your door, anywhere in Abu Dhabi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Cairo:wght@600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0b0b;
+    --panel:#141414;
+    --panel-2:#111;
+    --line:rgba(255,255,255,.08);
+    --fg:#f4f3f1;
+    --fg-dim:#93918c;
+    --red:#e21313;
+    --red-deep:#9e0e0e;
+    --gap:96px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);color:var(--fg);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body.lang-ar{font-family:'Tajawal',sans-serif;}
+  h1,h2,h3,.tier-name,.price,.nav-links a,.logo-text{font-family:'Jost',sans-serif;margin:0;}
+  body.lang-ar h1, body.lang-ar h2, body.lang-ar h3, body.lang-ar .tier-name, body.lang-ar .price, body.lang-ar .nav-links a{
+    font-family:'Cairo',sans-serif;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:0 24px;}
+  img{max-width:100%;display:block;}
+  [hidden]{display:none !important;}
+  a{color:inherit;}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  @media(prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* Header */
+  .topbar{
+    position:fixed;top:0;left:0;right:0;z-index:60;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 24px;max-width:720px;margin:0 auto;
+    transition:background .3s ease, padding .3s ease;
+  }
+  .topbar.solid{background:rgba(11,11,11,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .brand{display:flex;align-items:center;gap:9px;}
+  .brand-logo{height:26px;display:block;}
+  .brand .logo-text{font-size:15px;font-weight:600;color:#fff;letter-spacing:.01em;}
+  .top-controls{display:flex;align-items:center;gap:10px;}
+  .lang-toggle{display:flex;border:1px solid rgba(255,255,255,.3);border-radius:20px;overflow:hidden;}
+  .lang-toggle button{
+    background:none;border:none;color:#fff;font-size:11.5px;font-weight:600;
+    padding:6px 12px;cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:.02em;
+  }
+  .lang-toggle button.active{background:var(--red);}
+  .menu-btn{
+    width:38px;height:38px;border:1px solid rgba(255,255,255,.3);border-radius:50%;
+    background:rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;
+    cursor:pointer;color:#fff;
+  }
+
+  /* Nav drawer */
+  .drawer-overlay{
+    position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:70;
+    opacity:0;pointer-events:none;transition:opacity .3s ease;
+  }
+  .drawer-overlay.open{opacity:1;pointer-events:auto;}
+  .drawer{
+    position:fixed;top:0;right:0;height:100%;width:78%;max-width:320px;
+    background:#111;z-index:80;border-left:1px solid var(--line);
+    transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+    padding:26px 28px;display:flex;flex-direction:column;
+  }
+  body.lang-ar .drawer{right:auto;left:0;border-left:none;border-right:1px solid var(--line);transform:translateX(-100%);}
+  .drawer.open{transform:translateX(0);}
+  .drawer-close{align-self:flex-end;background:none;border:none;color:#fff;font-size:26px;cursor:pointer;margin-bottom:20px;}
+  .nav-links{display:flex;flex-direction:column;gap:4px;}
+  .nav-links a{
+    display:block;padding:14px 4px;color:#fff;text-decoration:none;font-size:19px;font-weight:500;
+    border-bottom:1px solid var(--line);transition:color .2s;
+  }
+  .nav-links a:hover{color:var(--red);}
+  .drawer-cta{margin-top:auto;padding-top:20px;}
+  .drawer-cta a{
+    display:flex;align-items:center;justify-content:center;gap:8px;background:var(--red);color:#111;
+    padding:13px;font-weight:600;font-size:14.5px;text-decoration:none;border-radius:2px;
+  }
+
+  /* Hero */
+  .hero{position:relative;height:100svh;min-height:600px;max-height:920px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;}
+  .hero-media{position:absolute;inset:0;overflow:hidden;}
+  .hero-media img{width:100%;height:100%;object-fit:cover;object-position:70% 35%;animation:kenburns 24s ease-in-out infinite alternate;}
+  @keyframes kenburns{0%{transform:scale(1);}100%{transform:scale(1.08);}}
+  .hero-scrim{position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,10,10,.1) 0%, rgba(10,10,10,.25) 40%, rgba(10,10,10,.95) 96%);}
+  .hero-content{position:relative;z-index:2;padding:0 24px 56px;max-width:720px;margin:0 auto;width:100%;}
+  .hero-eyebrow{
+    display:inline-block;font-size:12px;letter-spacing:.14em;color:rgba(255,255,255,.75);
+    text-transform:uppercase;margin-bottom:14px;font-weight:500;
+  }
+  .hero h1{font-size:48px;line-height:1.02;font-weight:600;color:#fff;letter-spacing:-.01em;}
+  .hero .hl{color:var(--red);font-style:normal;}
+  .hero p.sub{color:rgba(255,255,255,.78);font-size:16px;line-height:1.6;margin-top:16px;max-width:40ch;font-weight:400;}
+  .hero-ctas{margin-top:28px;}
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px;
+    padding:14px 26px;text-decoration:none;border:none;cursor:pointer;border-radius:2px;
+    font-family:'Inter',sans-serif;transition:transform .2s ease, box-shadow .2s ease;
+  }
+  body.lang-ar .btn{font-family:'Tajawal',sans-serif;}
+  .btn-primary{background:var(--red);color:#fff;}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(226,19,19,.35);}
+  .btn-outline{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4);}
+  .mini-badges{display:flex;gap:22px;margin-top:26px;flex-wrap:wrap;}
+  .mini-badges span{font-size:12px;color:rgba(255,255,255,.65);display:flex;align-items:center;gap:6px;}
+  .mini-badges svg{color:var(--red);}
+
+  /* Section shell */
+  section.block{padding:var(--gap) 0;}
+  .section-head{margin-bottom:44px;text-align:left;}
+  .section-eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);font-weight:600;margin-bottom:10px;display:block;}
+  .section-head h2{font-size:32px;font-weight:600;color:#fff;letter-spacing:-.01em;}
+  .section-head p{color:var(--fg-dim);font-size:15px;margin-top:10px;max-width:52ch;line-height:1.6;}
+
+  hr.divider{border:none;border-top:1px solid var(--line);margin:0;}
+
+  /* Home service inline strip (compact) */
+  .service-note{display:flex;gap:12px;align-items:center;padding:18px 0;}
+  .service-note svg{flex:0 0 auto;color:var(--red);}
+  .service-note p{margin:0;font-size:14.5px;color:var(--fg);line-height:1.5;}
+  .service-note strong{color:#fff;}
+
+  /* Tiers */
+  .tiers{display:flex;flex-direction:column;gap:20px;}
+  .tier{
+    position:relative;background:var(--panel);padding:30px 26px;border-radius:4px;
+    border:1px solid var(--line);transition:border-color .25s ease, transform .25s ease;
+  }
+  .tier:hover{transform:translateY(-3px);border-color:rgba(226,19,19,.4);}
+  .tier.featured{border-color:var(--red);}
+  .tier-index{position:absolute;top:24px;inset-inline-end:26px;font-size:12px;font-weight:600;color:var(--fg-dim);letter-spacing:.1em;}
+  .tier-name{font-size:23px;font-weight:600;color:#fff;}
+  .tier-sub{font-size:13px;color:var(--fg-dim);margin-top:4px;}
+  .discount-tag{display:inline-block;margin-top:16px;background:rgba(226,19,19,.15);color:#ff6b6b;font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:20px;letter-spacing:.02em;}
+  .price-row{display:flex;align-items:baseline;gap:10px;margin-top:12px;}
+  .price-old{font-size:14px;color:var(--fg-dim);text-decoration:line-through;}
+  .price{font-size:32px;font-weight:600;color:#fff;}
+  .price .cur{font-size:13px;font-weight:400;color:var(--fg-dim);}
+  .tier ul{list-style:none;margin:20px 0 0;padding:0;}
+  .tier li{font-size:14px;color:var(--fg);padding:8px 0;border-top:1px solid var(--line);display:flex;gap:10px;align-items:flex-start;}
+  .tier li:first-child{border-top:none;}
+  .tier li svg{flex:0 0 auto;margin-top:3px;color:var(--red);}
+  .tier-tag{margin-top:18px;font-size:12.5px;color:var(--fg-dim);}
+
+  /* Gallery teaser */
+  .gallery-teaser{display:block;text-decoration:none;border:1px solid var(--line);border-radius:6px;overflow:hidden;transition:border-color .25s ease, transform .25s ease;}
+  .gallery-teaser:hover{border-color:rgba(226,19,19,.4);transform:translateY(-3px);}
+  .gt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--line);}
+  .gt-grid img{width:100%;height:100%;object-fit:cover;aspect-ratio:1/1;display:block;}
+  .gt-cta{display:flex;align-items:center;justify-content:center;gap:9px;padding:16px;background:var(--panel);color:#fff;font-weight:600;font-size:14.5px;}
+  body.lang-ar .gt-cta{font-family:'Tajawal',sans-serif;}
+  @media(min-width:520px){ .gt-grid{grid-template-columns:repeat(4,1fr);} }
+
+  /* Lightbox */
+  .lightbox{position:fixed;inset:0;background:rgba(5,5,5,.96);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s ease;}
+  .lightbox.open{opacity:1;pointer-events:auto;}
+  .lightbox img{max-width:100%;max-height:88vh;object-fit:contain;border-radius:2px;}
+  .lightbox-close{position:absolute;top:20px;inset-inline-end:20px;color:#fff;font-size:30px;background:none;border:none;cursor:pointer;}
+
+  /* Certifications */
+  .certs{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;}
+  .cert-card{
+    border:1px dashed rgba(255,255,255,.22);border-radius:4px;padding:26px 20px;
+    display:flex;flex-direction:column;align-items:flex-start;gap:12px;min-height:150px;
+    background:rgba(255,255,255,.02);
+  }
+  .cert-card svg{color:var(--red);}
+  .cert-card .cert-title{font-size:14.5px;font-weight:600;color:#fff;}
+  .cert-card .cert-status{font-size:12.5px;color:var(--fg-dim);}
+
+  /* Custom form */
+  .form-grid{display:flex;flex-direction:column;gap:16px;max-width:520px;}
+  .field label{display:block;font-size:12.5px;color:var(--fg-dim);margin-bottom:7px;letter-spacing:.02em;}
+  .field input, .field textarea, .field select{
+    width:100%;background:var(--panel);border:1px solid var(--line);color:#fff;
+    padding:13px 14px;font-family:'Inter',sans-serif;font-size:14.5px;border-radius:3px;
+    transition:border-color .2s ease;
+  }
+  body.lang-ar .field input, body.lang-ar .field textarea, body.lang-ar .field select{font-family:'Tajawal',sans-serif;}
+  .field input:focus, .field textarea:focus, .field select:focus{outline:none;border-color:var(--red);}
+  .field textarea{resize:vertical;min-height:100px;}
+  .form-submit{align-self:flex-start;margin-top:6px;}
+
+  /* Footer */
+  footer{padding:56px 0 40px;border-top:1px solid var(--line);}
+  .social-row{display:flex;gap:18px;margin-bottom:16px;flex-wrap:wrap;}
+  .social-row a{display:flex;align-items:center;gap:7px;color:var(--fg-dim);text-decoration:none;font-size:13.5px;transition:color .2s;}
+  .social-row a:hover{color:#fff;}
+  footer p{color:var(--fg-dim);font-size:12.5px;line-height:1.7;margin:4px 0;}
+  footer .signature{color:var(--red);font-weight:600;}
+
+  /* Sticky CTA */
+  .cta-bar{
+    position:fixed;bottom:0;left:0;right:0;background:rgba(10,10,10,.94);backdrop-filter:blur(8px);
+    border-top:1px solid var(--line);padding:12px 20px calc(12px + env(safe-area-inset-bottom));
+    display:flex;gap:10px;max-width:720px;margin:0 auto;z-index:50;
+  }
+  .cta-bar a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 10px;font-size:14.5px;font-weight:600;text-decoration:none;font-family:'Inter',sans-serif;border-radius:3px;}
+  body.lang-ar .cta-bar a{font-family:'Tajawal',sans-serif;}
+  .cta-whatsapp{background:var(--red);color:#fff;}
+  .cta-call{background:transparent;border:1px solid rgba(255,255,255,.3);color:var(--fg);}
+  body{padding-bottom:78px;}
+
+  @media(min-width:720px){
+    :root{--gap:130px;}
+    .tiers{flex-direction:row;}
+    .tier{flex:1;}
+    .hero h1{font-size:64px;}
+    .gallery{grid-template-columns:repeat(3,1fr);}
+    .gallery figure:first-child{grid-column:span 2;}
+  }
+</style>
+</head>
+<body id="body">
+
+<div class="topbar" id="topbar">
+  <div class="brand">
+    <img class="brand-logo" src="images/logo.png" alt="Bicifull Care">
+  </div>
+  <div class="top-controls">
+    <div class="lang-toggle">
+      <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+      <button id="btn-ar" onclick="setLang('ar')">AR</button>
+    </div>
+    <button class="menu-btn" onclick="openDrawer()" aria-label="Menu">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+<nav class="drawer" id="drawer">
+  <button class="drawer-close" onclick="closeDrawer()">&times;</button>
+  <div class="nav-links">
+    <a href="#services" onclick="closeDrawer()" class="lang-block" data-lang="en">Services</a>
+    <a href="#services" onclick="closeDrawer()" class="lang-block" data-lang="ar" hidden>خدماتنا</a>
+
+    <a href="portfolio.html" class="lang-block" data-lang="en">Work We've Done</a>
+    <a href="portfolio.html" class="lang-block" data-lang="ar" hidden>أعمالنا</a>
+
+    <a href="#certifications" onclick="closeDrawer()" class="lang-block" data-lang="en">Certifications</a>
+    <a href="#certifications" onclick="closeDrawer()" class="lang-block" data-lang="ar" hidden>الشهادات</a>
+
+    <a href="#custom-request" onclick="closeDrawer()" class="lang-block" data-lang="en">Custom Request</a>
+    <a href="#custom-request" onclick="closeDrawer()" class="lang-block" data-lang="ar" hidden>طلب خاص</a>
+
+    <a href="#contact" onclick="closeDrawer()" class="lang-block" data-lang="en">Contact</a>
+    <a href="#contact" onclick="closeDrawer()" class="lang-block" data-lang="ar" hidden>تواصل معنا</a>
+  </div>
+  <div class="drawer-cta">
+    <a id="drawer-wa" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 2a8 8 0 0 1 6.9 12L20 20l-4.1-1.1A8 8 0 1 1 12 4Z"/></svg>
+      <span id="drawer-wa-label">Message on WhatsApp</span>
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-media"><img src="images/hero.jpg" alt="Bicifull Care bike service in Abu Dhabi"></div>
+  <div class="hero-scrim"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow lang-block" data-lang="en">Bicifull Care · Abu Dhabi</span>
+    <span class="hero-eyebrow lang-block" data-lang="ar" hidden>بايسيفول كير · أبوظبي</span>
+    <div class="lang-block" data-lang="en">
+      <h1>Your bike, <span class="hl">always ready.</span></h1>
+      <p class="sub">Professional maintenance with passion and detail — we come to your door, anywhere in Abu Dhabi.</p>
+    </div>
+    <div class="lang-block" data-lang="ar" hidden>
+      <h1><span class="hl">دراجتك، جاهزة دائماً.</span></h1>
+      <p class="sub">صيانة احترافية بشغف واهتمام بالتفاصيل — نصل إليك أينما كنت في أبوظبي.</p>
+    </div>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" id="hero-wa" target="_blank" rel="noopener">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 2a8 8 0 0 1 6.9 12L20 20l-4.1-1.1A8 8 0 1 1 12 4Zm-3.4 4.3c-.2 0-.5 0-.7.3-.2.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.1 1.8 2.9 4.5 4 2.2.9 2.7.8 3.2.7.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.1-1.3-.1-.1-.3-.2-.5-.3-.3-.1-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.1.2-.3.2-.5.1-.3-.1-1.1-.4-2.1-1.3-.8-.7-1.3-1.6-1.5-1.9-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.2-.5.1-.2 0-.3 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.4-.6-.4Z"/></svg>
+        <span id="hero-wa-label">Message on WhatsApp</span>
+      </a>
+    </div>
+    <div class="mini-badges">
+      <span class="lang-block" data-lang="en"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg> Home service, no extra cost</span>
+      <span class="lang-block" data-lang="ar" hidden><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg> خدمة منزلية بدون رسوم إضافية</span>
+      <span class="lang-block" data-lang="en"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg> All across Abu Dhabi</span>
+      <span class="lang-block" data-lang="ar" hidden><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg> في جميع أنحاء أبوظبي</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+
+  <!-- SERVICES -->
+  <section class="block" id="services">
+    <div class="section-head reveal">
+      <span class="section-eyebrow lang-block" data-lang="en">Pricing</span>
+      <span class="section-eyebrow lang-block" data-lang="ar" hidden>الأسعار</span>
+      <h2 class="lang-block" data-lang="en">Choose your service</h2>
+      <h2 class="lang-block" data-lang="ar" hidden>اختر خدمتك</h2>
+      <p class="lang-block" data-lang="en">Three levels of care, from a quick refresh to a full professional overhaul.</p>
+      <p class="lang-block" data-lang="ar" hidden>ثلاثة مستويات من العناية، من تنظيف سريع إلى صيانة احترافية كاملة.</p>
+    </div>
+    <div class="tiers">
+
+      <div class="tier reveal">
+        <span class="tier-index">01</span>
+        <div class="tier-name lang-block" data-lang="en">Wash 'n Lube</div>
+        <div class="tier-name lang-block" data-lang="ar" hidden>غسيل وتشحيم</div>
+        <div class="tier-sub lang-block" data-lang="en">Wash &amp; lubricate</div>
+        <div class="tier-sub lang-block" data-lang="ar" hidden>غسيل وتشحيم شامل</div>
+
+        <div class="discount-tag lang-block" data-lang="en">SAVE 29%</div>
+        <div class="discount-tag lang-block" data-lang="ar" hidden>خصم 29%</div>
+        <div class="price-row"><span class="price-old">120</span><span class="price">85 <span class="cur">AED</span></span></div>
+
+        <ul class="lang-block" data-lang="en">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> Full wash and cleaning</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> Brake &amp; gear setup</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> Chain &amp; cable lubrication</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> Air calibration</li>
+        </ul>
+        <ul class="lang-block" data-lang="ar" hidden>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> غسيل وتنظيف كامل</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> ضبط الفرامل والتروس</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> تشحيم السلسلة والكابلات</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> معايرة الهواء</li>
+        </ul>
+        <div class="tier-tag lang-block" data-lang="en">Perfect for regular maintenance</div>
+        <div class="tier-tag lang-block" data-lang="ar" hidden>مثالية للصيانة الدورية</div>
+      </div>
+
+      <div class="tier featured reveal">
+        <span class="tier-index">02</span>
+        <div class="tier-name lang-block" data-lang="en">Level 2</div>
+        <div class="tier-name lang-block" data-lang="ar" hidden>المستوى الثاني</div>
+        <div class="tier-sub lang-block" data-lang="en">Complete service</div>
+        <div class="tier-sub lang-block" data-lang="ar" hidden>خدمة شاملة</div>
+
+        <div class="discount-tag lang-block" data-lang="en">SAVE 20%</div>
+        <div class="discount-tag lang-block" data-lang="ar" hidden>خصم 20%</div>
+        <div class="price-row"><span class="price-old">250</span><span class="price">200 <span class="cur">AED</span></span></div>
+
+        <ul class="lang-block" data-lang="en">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> Bearings check</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> Re-grease seatpost</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> Pistons lubrication</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> Torque check</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> Tire fitting</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> Rust-free screws</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> General diagnostic</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> Pulley greasing</li>
+        </ul>
+        <ul class="lang-block" data-lang="ar" hidden>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> فحص المحامل</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> إعادة تشحيم سنام المقعد</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> تشحيم المكابس</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> فحص عزم الربط</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> تركيب الإطارات</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> براغي مقاومة للصدأ</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> تشخيص عام</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> تشحيم البكرة</li>
+        </ul>
+        <div class="tier-tag lang-block" data-lang="en">Performance &amp; total safety</div>
+        <div class="tier-tag lang-block" data-lang="ar" hidden>أداء وأمان كامل</div>
+      </div>
+
+      <div class="tier reveal">
+        <span class="tier-index">03</span>
+        <div class="tier-name lang-block" data-lang="en">Level 3</div>
+        <div class="tier-name lang-block" data-lang="ar" hidden>المستوى الثالث</div>
+        <div class="tier-sub lang-block" data-lang="en">Premium maintenance</div>
+        <div class="tier-sub lang-block" data-lang="ar" hidden>صيانة متميزة</div>
+
+        <div class="discount-tag lang-block" data-lang="en">SAVE 27%</div>
+        <div class="discount-tag lang-block" data-lang="ar" hidden>خصم 27%</div>
+        <div class="price-row"><span class="price-old">550</span><span class="price">400 <span class="cur">AED</span></span></div>
+
+        <ul class="lang-block" data-lang="en">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> Complete bike disassembly</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> Headset greasing</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> Bottom bracket greasing</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> Hubs greasing</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> Hub core greasing</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> Fine-tune adjustments</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> Suspension diagnostic</li>
+        </ul>
+        <ul class="lang-block" data-lang="ar" hidden>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> تفكيك كامل للدراجة</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> تشحيم طقم التوجيه</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> تشحيم علبة الحركة السفلية</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> تشحيم المحاور</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> تشحيم قلب المحور</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> ضبط دقيق</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> تشخيص نظام التعليق</li>
+        </ul>
+        <div class="tier-tag lang-block" data-lang="en">For demanding bikes &amp; cyclists</div>
+        <div class="tier-tag lang-block" data-lang="ar" hidden>للدراجات والراكبين المميزين</div>
+      </div>
+
+    </div>
+
+    <div class="service-note reveal">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-6h4v6"/></svg>
+      <p class="lang-block" data-lang="en"><strong>We travel to you</strong>, anywhere in Abu Dhabi — no extra cost for home service.</p>
+      <p class="lang-block" data-lang="ar" hidden><strong>نصل إليك</strong> أينما كنت في أبوظبي — بدون أي رسوم إضافية على الخدمة المنزلية.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- GALLERY -->
+  <section class="block" id="gallery">
+    <div class="section-head reveal">
+      <span class="section-eyebrow lang-block" data-lang="en">Portfolio</span>
+      <span class="section-eyebrow lang-block" data-lang="ar" hidden>أعمالنا</span>
+      <h2 class="lang-block" data-lang="en">Services we've completed</h2>
+      <h2 class="lang-block" data-lang="ar" hidden>الخدمات التي أنجزناها</h2>
+      <p class="lang-block" data-lang="en">37+ bikes serviced across Abu Dhabi — see the full before/after gallery.</p>
+      <p class="lang-block" data-lang="ar" hidden>أكثر من 37 دراجة تمت صيانتها في أبوظبي — شاهد معرض الصور كاملاً.</p>
+    </div>
+    <a href="portfolio.html" class="gallery-teaser reveal">
+      <div class="gt-grid">
+        <img src="batch1/blackheart-3/00.jpg" loading="lazy" alt="Blackheart Level 3 service">
+        <img src="batch1/colnago-c64-3/00.jpg" loading="lazy" alt="Colnago C64 Level 3 service">
+        <img src="batch1/pinnarello-dogma-2/00.jpg" loading="lazy" alt="Pinarello Dogma Level 2 service">
+        <img src="batch2/canyon-wash/00.jpg" loading="lazy" alt="Canyon Wash n Lube service">
+      </div>
+      <div class="gt-cta">
+        <span class="lang-block" data-lang="en">View full portfolio</span>
+        <span class="lang-block" data-lang="ar" hidden>عرض معرض الأعمال كاملاً</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </div>
+    </a>
+  </section>
+
+  <hr class="divider">
+
+  <!-- CERTIFICATIONS -->
+  <section class="block" id="certifications">
+    <div class="section-head reveal">
+      <span class="section-eyebrow lang-block" data-lang="en">Credentials</span>
+      <span class="section-eyebrow lang-block" data-lang="ar" hidden>المؤهلات</span>
+      <h2 class="lang-block" data-lang="en">Certifications</h2>
+      <h2 class="lang-block" data-lang="ar" hidden>الشهادات</h2>
+      <p class="lang-block" data-lang="en">Professional training and safety certifications — added soon.</p>
+      <p class="lang-block" data-lang="ar" hidden>التدريب المهني وشهادات السلامة — قريباً.</p>
+    </div>
+    <div class="certs reveal">
+      <div class="cert-card">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="5"/><path d="M8 13l-2 8 6-3 6 3-2-8"/></svg>
+        <div class="cert-title lang-block" data-lang="en">Technical certification</div>
+        <div class="cert-title lang-block" data-lang="ar" hidden>شهادة فنية</div>
+        <div class="cert-status lang-block" data-lang="en">Coming soon</div>
+        <div class="cert-status lang-block" data-lang="ar" hidden>قريباً</div>
+      </div>
+      <div class="cert-card">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="5"/><path d="M8 13l-2 8 6-3 6 3-2-8"/></svg>
+        <div class="cert-title lang-block" data-lang="en">Suspension specialist</div>
+        <div class="cert-title lang-block" data-lang="ar" hidden>أخصائي التعليق</div>
+        <div class="cert-status lang-block" data-lang="en">Coming soon</div>
+        <div class="cert-status lang-block" data-lang="ar" hidden>قريباً</div>
+      </div>
+      <div class="cert-card">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="5"/><path d="M8 13l-2 8 6-3 6 3-2-8"/></svg>
+        <div class="cert-title lang-block" data-lang="en">Safety training</div>
+        <div class="cert-title lang-block" data-lang="ar" hidden>تدريب السلامة</div>
+        <div class="cert-status lang-block" data-lang="en">Coming soon</div>
+        <div class="cert-status lang-block" data-lang="ar" hidden>قريباً</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- CUSTOM REQUEST -->
+  <section class="block" id="custom-request">
+    <div class="section-head reveal">
+      <span class="section-eyebrow lang-block" data-lang="en">Something specific?</span>
+      <span class="section-eyebrow lang-block" data-lang="ar" hidden>هل تحتاج شيئاً محدداً؟</span>
+      <h2 class="lang-block" data-lang="en">Custom request</h2>
+      <h2 class="lang-block" data-lang="ar" hidden>طلب خاص</h2>
+      <p class="lang-block" data-lang="en">Tell us what your bike needs and we'll get back to you on WhatsApp.</p>
+      <p class="lang-block" data-lang="ar" hidden>أخبرنا بما تحتاجه دراجتك وسنتواصل معك عبر واتساب.</p>
+    </div>
+    <form class="form-grid reveal" id="custom-form" onsubmit="return submitCustomForm(event)">
+      <div class="field">
+        <label class="lang-block" data-lang="en">Your name</label>
+        <label class="lang-block" data-lang="ar" hidden>اسمك</label>
+        <input type="text" id="f-name" required>
+      </div>
+      <div class="field">
+        <label class="lang-block" data-lang="en">Bike brand / type</label>
+        <label class="lang-block" data-lang="ar" hidden>نوع / ماركة الدراجة</label>
+        <input type="text" id="f-bike">
+      </div>
+      <div class="field">
+        <label class="lang-block" data-lang="en">What do you need?</label>
+        <label class="lang-block" data-lang="ar" hidden>ما الذي تحتاجه؟</label>
+        <select id="f-service" onchange="onServiceChange()" required></select>
+      </div>
+      <div class="field" id="f-note-field">
+        <label id="f-note-label" class="lang-block" data-lang="en">Additional notes (optional)</label>
+        <textarea id="f-message" placeholder=""></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary form-submit">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Z"/></svg>
+        <span class="lang-block" data-lang="en">Send via WhatsApp</span>
+        <span class="lang-block" data-lang="ar" hidden>إرسال عبر واتساب</span>
+      </button>
+    </form>
+  </section>
+
+  <hr class="divider">
+
+  <!-- CONTACT / FOOTER -->
+  <footer id="contact">
+    <div class="social-row">
+      <a href="https://instagram.com/olartemecanico" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+        Instagram
+      </a>
+      <a href="https://tiktok.com/@olartemecanico" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 4v9.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 4c.5 2.5 2 4 4.5 4.3"/></svg>
+        TikTok
+      </a>
+      <a href="https://youtube.com/@bicifulll" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="18" height="12" rx="3"/><path d="M11 9.5 15 12l-4 2.5z" fill="currentColor" stroke="none"/></svg>
+        YouTube
+      </a>
+    </div>
+    <p class="lang-block" data-lang="en">Home service across Abu Dhabi. <span class="signature">Ride safe. Ride happy.</span></p>
+    <p class="lang-block" data-lang="ar" hidden>خدمة منزلية في جميع أنحاء أبوظبي. <span class="signature">اركب بأمان، اركب بسعادة.</span></p>
+  </footer>
+
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- STICKY CTA -->
+<div class="cta-bar">
+  <a class="cta-whatsapp" id="wa-btn" target="_blank" rel="noopener">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 2a8 8 0 0 1 6.9 12L20 20l-4.1-1.1A8 8 0 1 1 12 4Zm-3.4 4.3c-.2 0-.5 0-.7.3-.2.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.1 1.8 2.9 4.5 4 2.2.9 2.7.8 3.2.7.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.1-1.3-.1-.1-.3-.2-.5-.3-.3-.1-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.1.2-.3.2-.5.1-.3-.1-1.1-.4-2.1-1.3-.8-.7-1.3-1.6-1.5-1.9-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.2-.5.1-.2 0-.3 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.4-.6-.4Z"/></svg>
+    <span id="wa-label">Message on WhatsApp</span>
+  </a>
+  <a class="cta-call" id="call-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5c0-1 1-2 2-2h2l2 5-2 1.5c1 2.3 2.7 4 5 5L14.5 13 19 15v2c0 1-1 2-2 2C10.5 19 5 13.5 5 7Z"/></svg>
+    <span id="call-label">Call now</span>
+  </a>
+</div>
+
+<script>
+  const WA_NUMBER = "971527951828";
+  const CALL_NUMBER = "+971527951828";
+  const waText = {
+    en: "Hi Bicifull Care, I'd like to book a bike service.",
+    ar: "مرحباً بايسيفول كير، أرغب في حجز خدمة صيانة للدراجة."
+  };
+  const ctaText = {
+    en: { wa: "Message on WhatsApp", call: "Call now" },
+    ar: { wa: "راسلنا عبر واتساب", call: "اتصل الآن" }
+  };
+  let currentLang = 'en';
+
+  function waLink(lang, text){
+    return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text || waText[lang])}`;
+  }
+
+  function setLang(lang){
+    currentLang = lang;
+    document.querySelectorAll('.lang-block').forEach(el=>{ el.hidden = el.dataset.lang !== lang; });
+    const body = document.getElementById('body');
+    body.classList.toggle('lang-ar', lang === 'ar');
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.getElementById('btn-en').classList.toggle('active', lang==='en');
+    document.getElementById('btn-ar').classList.toggle('active', lang==='ar');
+
+    document.getElementById('wa-btn').href = waLink(lang);
+    document.getElementById('call-btn').href = `tel:${CALL_NUMBER}`;
+    document.getElementById('wa-label').textContent = ctaText[lang].wa;
+    document.getElementById('call-label').textContent = ctaText[lang].call;
+    document.getElementById('hero-wa').href = waLink(lang);
+    document.getElementById('hero-wa-label').textContent = ctaText[lang].wa;
+    document.getElementById('drawer-wa').href = waLink(lang);
+    document.getElementById('drawer-wa-label').textContent = ctaText[lang].wa;
+
+    renderServiceOptions(lang);
+    onServiceChange();
+  }
+
+  function openDrawer(){
+    document.getElementById('drawer').classList.add('open');
+    document.getElementById('drawer-overlay').classList.add('open');
+  }
+  function closeDrawer(){
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('drawer-overlay').classList.remove('open');
+  }
+
+  function openLightbox(src){
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); }
+
+  const serviceOptions = [
+    { value: "wash",   en: "Wash 'n Lube",              ar: "غسيل وتشحيم" },
+    { value: "level2", en: "Level 2",                   ar: "المستوى الثاني" },
+    { value: "level3", en: "Level 3",                   ar: "المستوى الثالث" },
+    { value: "brakes", en: "Brake &amp; gear adjustment", ar: "ضبط الفرامل والتروس" },
+    { value: "other",  en: "Other service",             ar: "خدمة أخرى" },
+  ];
+  const servicePlaceholder = { en: "Select a service…", ar: "اختر الخدمة…" };
+  const noteLabels = {
+    normal: { en: "Additional notes (optional)", ar: "ملاحظات إضافية (اختياري)" },
+    other:  { en: "Please specify the service (required)", ar: "يرجى تحديد الخدمة (إلزامي)" },
+  };
+
+  function renderServiceOptions(lang){
+    const sel = document.getElementById('f-service');
+    const prevValue = sel.value;
+    sel.innerHTML = `<option value="" disabled ${prevValue?'':'selected'}>${servicePlaceholder[lang]}</option>` +
+      serviceOptions.map(o => `<option value="${o.value}" ${o.value===prevValue?'selected':''}>${o[lang]}</option>`).join('');
+  }
+
+  function onServiceChange(){
+    const val = document.getElementById('f-service').value;
+    const msg = document.getElementById('f-message');
+    const label = document.getElementById('f-note-label');
+    if(val === 'other'){
+      msg.required = true;
+      label.textContent = noteLabels.other[currentLang];
+    } else {
+      msg.required = false;
+      label.textContent = noteLabels.normal[currentLang];
+    }
+  }
+
+  function submitCustomForm(e){
+    e.preventDefault();
+    const name = document.getElementById('f-name').value.trim();
+    const bike = document.getElementById('f-bike').value.trim();
+    const serviceSel = document.getElementById('f-service');
+    const serviceVal = serviceSel.value;
+    const serviceLabel = serviceOptions.find(o => o.value === serviceVal);
+    const serviceText = serviceLabel ? serviceLabel[currentLang].replace('&amp;','&') : serviceVal;
+    const msg = document.getElementById('f-message').value.trim();
+    let text;
+    if(currentLang === 'ar'){
+      text = `مرحباً بايسيفول كير، اسمي ${name}.`;
+      if(bike) text += ` دراجتي: ${bike}.`;
+      text += ` الخدمة المطلوبة: ${serviceText}.`;
+      if(msg) text += ` ملاحظات: ${msg}`;
+    } else {
+      text = `Hi Bicifull Care, my name is ${name}.`;
+      if(bike) text += ` My bike: ${bike}.`;
+      text += ` Service needed: ${serviceText}.`;
+      if(msg) text += ` Notes: ${msg}`;
+    }
+    window.open(waLink(currentLang, text), '_blank');
+    return false;
+  }
+
+  const topbar = document.getElementById('topbar');
+  window.addEventListener('scroll', ()=>{ topbar.classList.toggle('solid', window.scrollY > 40); });
+
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){ entry.target.classList.add('in'); observer.unobserve(entry.target); }
+    });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+  setLang('en');
+</script>
+
+</body>
+</html>

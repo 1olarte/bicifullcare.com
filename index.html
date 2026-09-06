@@ -22,7 +22,7 @@
     --fg-dim:#93918c;
     --red:#e21313;
     --red-deep:#9e0e0e;
-    --gap:96px;
+    --gap:52px;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -87,6 +87,7 @@
     padding:26px 28px;display:flex;flex-direction:column;
   }
   body.lang-ar .drawer{right:auto;left:0;border-left:none;border-right:1px solid var(--line);transform:translateX(-100%);}
+  body.lang-ar .drawer.open{transform:translateX(0);}
   .drawer.open{transform:translateX(0);}
   .drawer-close{align-self:flex-end;background:none;border:none;color:#fff;font-size:26px;cursor:pointer;margin-bottom:20px;}
   .nav-links{display:flex;flex-direction:column;gap:4px;}
@@ -104,7 +105,7 @@
   /* Hero */
   .hero{position:relative;height:100svh;min-height:600px;max-height:920px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;}
   .hero-media{position:absolute;inset:0;overflow:hidden;}
-  .hero-media img{width:100%;height:100%;object-fit:cover;object-position:70% 35%;animation:kenburns 24s ease-in-out infinite alternate;}
+  .hero-media img{width:100%;height:100%;object-fit:cover;object-position:50% 55%;animation:kenburns 24s ease-in-out infinite alternate;}
   @keyframes kenburns{0%{transform:scale(1);}100%{transform:scale(1.08);}}
   .hero-scrim{position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,10,10,.1) 0%, rgba(10,10,10,.25) 40%, rgba(10,10,10,.95) 96%);}
   .hero-content{position:relative;z-index:2;padding:0 24px 56px;max-width:720px;margin:0 auto;width:100%;}
@@ -131,7 +132,7 @@
 
   /* Section shell */
   section.block{padding:var(--gap) 0;}
-  .section-head{margin-bottom:44px;text-align:left;}
+  .section-head{margin-bottom:30px;text-align:left;}
   .section-eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);font-weight:600;margin-bottom:10px;display:block;}
   .section-head h2{font-size:32px;font-weight:600;color:#fff;letter-spacing:-.01em;}
   .section-head p{color:var(--fg-dim);font-size:15px;margin-top:10px;max-width:52ch;line-height:1.6;}
@@ -149,9 +150,12 @@
   .tier{
     position:relative;background:var(--panel);padding:30px 26px;border-radius:4px;
     border:1px solid var(--line);transition:border-color .25s ease, transform .25s ease;
+    cursor:pointer;
   }
   .tier:hover{transform:translateY(-3px);border-color:rgba(226,19,19,.4);}
   .tier.featured{border-color:var(--red);}
+  .tier.selected{border-color:var(--red);border-width:2px;padding:29px 25px;box-shadow:0 0 0 1px rgba(226,19,19,.25);}
+  .tier.selected .tier-index::after{content:" ✓";color:var(--red);}
   .tier-index{position:absolute;top:24px;inset-inline-end:26px;font-size:12px;font-weight:600;color:var(--fg-dim);letter-spacing:.1em;}
   .tier-name{font-size:23px;font-weight:600;color:#fff;}
   .tier-sub{font-size:13px;color:var(--fg-dim);margin-top:4px;}
@@ -165,6 +169,15 @@
   .tier li:first-child{border-top:none;}
   .tier li svg{flex:0 0 auto;margin-top:3px;color:var(--red);}
   .tier-tag{margin-top:18px;font-size:12.5px;color:var(--fg-dim);}
+
+  /* Tier action bar */
+  .tier-action{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap;}
+  .tier-action .btn{flex:1;min-width:200px;justify-content:center;}
+  .btn.tier-book:disabled{background:var(--panel);color:var(--fg-dim);cursor:not-allowed;border:1px solid var(--line);}
+  .btn.tier-book:not(:disabled){background:var(--red);color:#fff;}
+  .btn.tier-book:not(:disabled):hover{transform:translateY(-2px);}
+  .tier-specific{background:transparent;border:1px solid var(--line);color:var(--fg);text-decoration:none;}
+  .tier-specific:hover{border-color:var(--red);color:#fff;}
 
   /* Gallery teaser */
   .gallery-teaser{display:block;text-decoration:none;border:1px solid var(--line);border-radius:6px;overflow:hidden;transition:border-color .25s ease, transform .25s ease;}
@@ -231,7 +244,7 @@
   body{padding-bottom:78px;}
 
   @media(min-width:720px){
-    :root{--gap:130px;}
+    :root{--gap:72px;}
     .tiers{flex-direction:row;}
     .tier{flex:1;}
     .hero h1{font-size:64px;}
@@ -264,11 +277,14 @@
     <a href="#services" onclick="closeDrawer()" class="lang-block" data-lang="en">Services</a>
     <a href="#services" onclick="closeDrawer()" class="lang-block" data-lang="ar" hidden>خدماتنا</a>
 
-    <a href="portfolio.html" class="lang-block" data-lang="en">Work We've Done</a>
-    <a href="portfolio.html" class="lang-block" data-lang="ar" hidden>أعمالنا</a>
+    <a href="portfolio/" class="lang-block" data-lang="en">Work We've Done</a>
+    <a href="portfolio/" class="lang-block" data-lang="ar" hidden>أعمالنا</a>
 
-    <a href="certifications.html" class="lang-block" data-lang="en">Certifications</a>
-    <a href="certifications.html" class="lang-block" data-lang="ar" hidden>الشهادات</a>
+    <a href="certifications/" class="lang-block" data-lang="en">Certifications</a>
+    <a href="certifications/" class="lang-block" data-lang="ar" hidden>الشهادات</a>
+
+    <a href="about/" class="lang-block" data-lang="en">About Andrés</a>
+    <a href="about/" class="lang-block" data-lang="ar" hidden>عن أندريس</a>
 
     <a href="#custom-request" onclick="closeDrawer()" class="lang-block" data-lang="en">Custom Request</a>
     <a href="#custom-request" onclick="closeDrawer()" class="lang-block" data-lang="ar" hidden>طلب خاص</a>
@@ -328,7 +344,7 @@
     </div>
     <div class="tiers">
 
-      <div class="tier reveal">
+      <div class="tier reveal" data-tier="wash" onclick="selectTier('wash')">
         <span class="tier-index">01</span>
         <div class="tier-name lang-block" data-lang="en">Wash 'n Lube</div>
         <div class="tier-name lang-block" data-lang="ar" hidden>غسيل وتشحيم</div>
@@ -355,7 +371,7 @@
         <div class="tier-tag lang-block" data-lang="ar" hidden>مثالية للصيانة الدورية</div>
       </div>
 
-      <div class="tier featured reveal">
+      <div class="tier featured reveal" data-tier="level2" onclick="selectTier('level2')">
         <span class="tier-index">02</span>
         <div class="tier-name lang-block" data-lang="en">Level 2</div>
         <div class="tier-name lang-block" data-lang="ar" hidden>المستوى الثاني</div>
@@ -390,7 +406,7 @@
         <div class="tier-tag lang-block" data-lang="ar" hidden>أداء وأمان كامل</div>
       </div>
 
-      <div class="tier reveal">
+      <div class="tier reveal" data-tier="level3" onclick="selectTier('level3')">
         <span class="tier-index">03</span>
         <div class="tier-name lang-block" data-lang="en">Level 3</div>
         <div class="tier-name lang-block" data-lang="ar" hidden>المستوى الثالث</div>
@@ -425,6 +441,18 @@
 
     </div>
 
+    <div class="tier-action reveal">
+      <button class="btn btn-primary tier-book" id="tier-book-btn" onclick="bookSelectedTier()" disabled>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Z"/></svg>
+        <span id="tier-book-label" class="lang-block" data-lang="en">Select a service above</span>
+        <span id="tier-book-label-ar" class="lang-block" data-lang="ar" hidden>اختر خدمة أعلاه</span>
+      </button>
+      <a class="btn btn-outline tier-specific" href="#custom-request">
+        <span class="lang-block" data-lang="en">Something specific?</span>
+        <span class="lang-block" data-lang="ar" hidden>تحتاج شيئاً محدداً؟</span>
+      </a>
+    </div>
+
     <div class="service-note reveal">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-6h4v6"/></svg>
       <p class="lang-block" data-lang="en"><strong>We travel to you</strong>, anywhere in Abu Dhabi — no extra cost for home service.</p>
@@ -444,7 +472,7 @@
       <p class="lang-block" data-lang="en">37+ bikes serviced across Abu Dhabi — see the full before/after gallery.</p>
       <p class="lang-block" data-lang="ar" hidden>أكثر من 37 دراجة تمت صيانتها في أبوظبي — شاهد معرض الصور كاملاً.</p>
     </div>
-    <a href="portfolio.html" class="gallery-teaser reveal">
+    <a href="portfolio/" class="gallery-teaser reveal">
       <div class="gt-grid">
         <img src="batch1/blackheart-3/00.jpg" loading="lazy" alt="Blackheart Level 3 service">
         <img src="batch1/colnago-c64-3/00.jpg" loading="lazy" alt="Colnago C64 Level 3 service">
@@ -497,7 +525,7 @@
         </div>
       </div>
     </div>
-    <a href="certifications.html" class="btn btn-outline-full">
+    <a href="certifications/" class="btn btn-outline-full">
       <span class="lang-block" data-lang="en">View all certifications</span>
       <span class="lang-block" data-lang="ar" hidden>عرض جميع الشهادات</span>
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -624,6 +652,47 @@
 
     renderServiceOptions(lang);
     onServiceChange();
+    updateTierBookButton();
+  }
+
+  const tierInfo = {
+    wash:   { en: "Wash 'n Lube",  ar: "غسيل وتشحيم",         price: "85" },
+    level2: { en: "Level 2",       ar: "المستوى الثاني",       price: "200" },
+    level3: { en: "Level 3",       ar: "المستوى الثالث",       price: "400" },
+  };
+  let selectedTier = null;
+
+  function selectTier(tier){
+    selectedTier = (selectedTier === tier) ? null : tier;
+    document.querySelectorAll('.tier').forEach(el=>{
+      el.classList.toggle('selected', el.dataset.tier === selectedTier);
+    });
+    updateTierBookButton();
+  }
+
+  function updateTierBookButton(){
+    const btn = document.getElementById('tier-book-btn');
+    const labelEn = document.getElementById('tier-book-label');
+    const labelAr = document.getElementById('tier-book-label-ar');
+    if(selectedTier){
+      btn.disabled = false;
+      const info = tierInfo[selectedTier];
+      labelEn.textContent = `Book ${info.en} — ${info.price} AED`;
+      labelAr.textContent = `احجز ${info.ar} — ${info.price} درهم`;
+    } else {
+      btn.disabled = true;
+      labelEn.textContent = "Select a service above";
+      labelAr.textContent = "اختر خدمة أعلاه";
+    }
+  }
+
+  function bookSelectedTier(){
+    if(!selectedTier) return;
+    const info = tierInfo[selectedTier];
+    const text = currentLang === 'ar'
+      ? `مرحباً بايسيفول كير، أرغب في حجز خدمة: ${info.ar} (${info.price} درهم).`
+      : `Hi Bicifull Care, I'd like to book: ${info.en} (${info.price} AED).`;
+    window.open(waLink(currentLang, text), '_blank');
   }
 
   function openDrawer(){

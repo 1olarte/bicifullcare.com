@@ -53,6 +53,14 @@
   .phero-stats .num{font-family:'Jost',sans-serif;font-size:30px;font-weight:700;color:#fff;}
   .phero-stats .lbl{font-size:12px;color:var(--fg-dim);margin-top:2px;}
 
+  /* Image hero */
+  .phero-media{position:relative;height:56vh;min-height:400px;max-height:600px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;}
+  .phero-media-el{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;}
+  .phero-media-scrim{position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,10,10,.15) 0%, rgba(10,10,10,.4) 50%, rgba(10,10,10,.97) 97%);}
+  .phero-media-content{position:relative;z-index:2;padding:0 24px 40px;max-width:1080px;margin:0 auto;width:100%;box-sizing:border-box;}
+  .phero-media-content h1{font-size:40px;font-weight:600;color:#fff;letter-spacing:-.01em;line-height:1.05;}
+  .phero-media-content p{color:rgba(255,255,255,.82);font-size:15.5px;margin-top:14px;max-width:58ch;line-height:1.6;}
+
   .provider-strip{display:flex;gap:28px;align-items:center;flex-wrap:wrap;padding:26px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:10px 0 50px;}
   .provider-strip .p-item{font-family:'Jost',sans-serif;font-weight:600;font-size:15px;color:var(--fg-dim);letter-spacing:.02em;}
   .provider-strip .p-item b{color:#fff;}
@@ -129,17 +137,22 @@
   </div>
 </div>
 
-<div class="wrap">
-
-  <section class="phero reveal">
+<section class="phero-media">
+  <img class="phero-media-el" src="../images/certifications-hero.jpg" alt="Bicifull Care team with completed certifications">
+  <div class="phero-media-scrim"></div>
+  <div class="phero-media-content">
     <span class="phero-eyebrow lang-block" data-lang="en">Credentials</span>
     <span class="phero-eyebrow lang-block" data-lang="ar" hidden>المؤهلات</span>
     <h1 class="lang-block" data-lang="en">Certifications</h1>
     <h1 class="lang-block" data-lang="ar" hidden>الشهادات</h1>
     <p class="lang-block" data-lang="en">Formal training behind every service — Shimano T.E.C. specialist courses plus dedicated suspension training, covering road, MTB, e-bike, and more.</p>
     <p class="lang-block" data-lang="ar" hidden>تدريب احترافي وراء كل خدمة — دورات متخصصة من Shimano T.E.C. بالإضافة إلى تدريب مخصص على أنظمة التعليق، تغطي الدراجات الرياضية والجبلية والكهربائية وأكثر.</p>
-    <div class="phero-stats" id="phero-stats"></div>
-  </section>
+  </div>
+</section>
+
+<div class="wrap">
+
+  <div class="phero-stats reveal" id="phero-stats"></div>
 
   <div class="provider-strip reveal">
     <span class="p-item lang-block" data-lang="en"><b>Shimano T.E.C.</b> — Technology Education + Certification</span>

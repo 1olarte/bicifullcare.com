@@ -10,7 +10,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#0b0b0b; --panel:#141414; --line:rgba(255,255,255,.09);
@@ -35,6 +35,15 @@
   .brand-logo{height:26px;display:block;}
   .back-link{font-size:13px;color:var(--fg-dim);text-decoration:none;display:flex;align-items:center;gap:6px;}
   .back-link:hover{color:#fff;}
+  .top-controls{display:flex;align-items:center;gap:14px;}
+  .lang-toggle{display:flex;border:1px solid rgba(255,255,255,.3);border-radius:20px;overflow:hidden;}
+  .lang-toggle button{background:none;border:none;color:#fff;font-size:11.5px;font-weight:600;padding:6px 12px;cursor:pointer;letter-spacing:.02em;font-family:'Inter',sans-serif;}
+  .lang-toggle button.active{background:var(--red);}
+  .lang-note{
+    position:relative;z-index:3;background:var(--red-deep);color:#fff;font-size:13px;text-align:center;
+    padding:10px 20px;
+  }
+  body[dir="rtl"] .top-controls, body[dir="rtl"] .back-link, body[dir="rtl"] .cta-bar a, body[dir="rtl"] .lang-note{font-family:'Tajawal',sans-serif;}
 
   /* Hero banner */
   .about-hero{position:relative;height:56vh;min-height:380px;max-height:560px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;}
@@ -87,16 +96,26 @@
   <a class="brand" href="../">
     <img class="brand-logo" src="../images/logo.png" alt="Bicifull Care">
   </a>
-  <a class="back-link" href="../">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-    Back to home
-  </a>
+  <div class="top-controls">
+    <a class="back-link" href="../" id="back-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      <span id="back-label">Back to home</span>
+    </a>
+    <div class="lang-toggle">
+      <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+      <button id="btn-ar" onclick="setLang('ar')">AR</button>
+    </div>
+  </div>
+</div>
+
+<div class="lang-note" id="lang-note" hidden>
+  <span id="lang-note-text"></span>
 </div>
 
 <section class="about-hero">
   <img src="../images/about-banner.jpg" alt="Andrés servicing a bike in Abu Dhabi">
   <div class="about-hero-scrim"></div>
-  <div class="about-hero-content">
+  <div class="about-hero-content" dir="ltr">
     <span class="ah-eyebrow">About</span>
     <h1>Andrés Olarte</h1>
     <p class="role">Mechanic. Educator. Engineer in the making.</p>
@@ -105,14 +124,14 @@
 
 <div class="wrap">
 
-  <div class="stats-row reveal">
+  <div class="stats-row reveal" dir="ltr">
     <div><span class="num">2019</span><span class="lbl">Started at BiciFULL, Colombia</span></div>
     <div><span class="num">16K+</span><span class="lbl">Cyclists reached online</span></div>
     <div><span class="num">3</span><span class="lbl">International certifying bodies</span></div>
     <div><span class="num">2</span><span class="lbl">Countries served</span></div>
   </div>
 
-  <article class="reveal">
+  <article class="reveal" dir="ltr">
     <p class="lead">From a small workshop in Colombia to bringing professional bike service to Abu Dhabi.</p>
     <p>My name is Andrés Olarte, and bicycles have been a part of my life for much longer than they have been a profession.</p>
     <p>I started working with bicycles at a young age, and what began as a passion gradually became a career. In 2019, I joined BiciFULL in Cota, Colombia, where I spent the following years developing my skills as a professional bicycle mechanic. Working with everything from everyday urban bikes to high-end road and mountain bikes taught me something I still believe today: every bicycle has a story, and every mechanical problem has a reason behind it.</p>
@@ -155,13 +174,13 @@
     <p class="lead">Professional bike care, brought directly to you.</p>
   </article>
 
-  <section class="book-cta reveal">
+  <section class="book-cta reveal" dir="ltr">
     <h2>Ready to book?</h2>
     <p>Message me on WhatsApp and let's get your bike looked after properly.</p>
-    <a class="btn btn-dark" id="book-btn" target="_blank" rel="noopener">Book now</a>
+    <a class="btn btn-dark" id="book-btn" target="_blank" rel="noopener"><span id="book-label">Book now</span></a>
   </section>
 
-  <footer>
+  <footer dir="ltr">
     <p>Bicifull Care · Home service across Abu Dhabi. <span class="signature">Ride safe. Ride happy.</span></p>
   </footer>
 
@@ -170,11 +189,11 @@
 <div class="cta-bar">
   <a class="cta-whatsapp" id="wa-btn" target="_blank" rel="noopener">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 2a8 8 0 0 1 6.9 12L20 20l-4.1-1.1A8 8 0 1 1 12 4Zm-3.4 4.3c-.2 0-.5 0-.7.3-.2.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.1 1.8 2.9 4.5 4 2.2.9 2.7.8 3.2.7.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.2.1-1.3-.1-.1-.3-.2-.5-.3-.3-.1-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.1.2-.3.2-.5.1-.3-.1-1.1-.4-2.1-1.3-.8-.7-1.3-1.6-1.5-1.9-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.2-.5.1-.2 0-.3 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.4-.6-.4Z"/></svg>
-    Message on WhatsApp
+    <span id="wa-label">Message on WhatsApp</span>
   </a>
   <a class="cta-call" id="call-btn">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5c0-1 1-2 2-2h2l2 5-2 1.5c1 2.3 2.7 4 5 5L14.5 13 19 15v2c0 1-1 2-2 2C10.5 19 5 13.5 5 7Z"/></svg>
-    Call now
+    <span id="call-label">Call now</span>
   </a>
 </div>
 
@@ -184,6 +203,31 @@
   document.getElementById('wa-btn').href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Hi Bicifull Care, I'd like to book a bike service.")}`;
   document.getElementById('call-btn').href = `tel:${CALL_NUMBER}`;
   document.getElementById('book-btn').href = document.getElementById('wa-btn').href;
+
+  function setLang(lang){
+    document.getElementById('btn-en').classList.toggle('active', lang==='en');
+    document.getElementById('btn-ar').classList.toggle('active', lang==='ar');
+    document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    const note = document.getElementById('lang-note');
+    const backLabel = document.getElementById('back-label');
+    const waLabel = document.getElementById('wa-label');
+    const callLabel = document.getElementById('call-label');
+    const bookLabel = document.getElementById('book-label');
+    if(lang === 'ar'){
+      note.hidden = false;
+      document.getElementById('lang-note-text').textContent = 'هذه الصفحة متوفرة حالياً باللغة الإنجليزية فقط.';
+      backLabel.textContent = 'العودة للرئيسية';
+      if(waLabel) waLabel.textContent = 'راسلنا عبر واتساب';
+      if(callLabel) callLabel.textContent = 'اتصل الآن';
+      if(bookLabel) bookLabel.textContent = 'احجز الآن';
+    } else {
+      note.hidden = true;
+      backLabel.textContent = 'Back to home';
+      if(waLabel) waLabel.textContent = 'Message on WhatsApp';
+      if(callLabel) callLabel.textContent = 'Call now';
+      if(bookLabel) bookLabel.textContent = 'Book now';
+    }
+  }
 
   const topbar = document.getElementById('topbar');
   window.addEventListener('scroll', ()=>{ topbar.classList.toggle('solid', window.scrollY > 40); });

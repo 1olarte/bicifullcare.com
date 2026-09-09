@@ -783,6 +783,7 @@ src="https://www.facebook.com/tr?id=1574384623528579&ev=PageView&noscript=1"
       text += ` Service needed: ${serviceText}.`;
       if(msg) text += ` Notes: ${msg}`;
     }
+    fbq('track', 'Contact');
     window.open(waLink(currentLang, text), '_blank');
     return false;
   }

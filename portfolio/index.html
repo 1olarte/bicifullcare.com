@@ -143,6 +143,38 @@
     .card-grid{grid-template-columns:repeat(4,1fr);}
     .phero h1{font-size:58px;}
   }
+
+  .menu-btn{
+    width:38px;height:38px;border:1px solid rgba(255,255,255,.3);border-radius:50%;
+    background:rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;
+    cursor:pointer;color:#fff;flex:0 0 auto;
+  }
+  .drawer-overlay{
+    position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:70;
+    opacity:0;pointer-events:none;transition:opacity .3s ease;
+  }
+  .drawer-overlay.open{opacity:1;pointer-events:auto;}
+  .drawer{
+    position:fixed;top:0;right:0;height:100%;width:78%;max-width:320px;
+    background:#111;z-index:80;border-left:1px solid var(--line);
+    transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+    padding:26px 28px;display:flex;flex-direction:column;
+  }
+  body.lang-ar .drawer{right:auto;left:0;border-left:none;border-right:1px solid var(--line);transform:translateX(-100%);}
+  body.lang-ar .drawer.open{transform:translateX(0);}
+  .drawer.open{transform:translateX(0);}
+  .drawer-close{align-self:flex-end;background:none;border:none;color:#fff;font-size:26px;cursor:pointer;margin-bottom:20px;}
+  .nav-links{display:flex;flex-direction:column;gap:4px;}
+  .nav-links a{
+    display:block;padding:14px 4px;color:#fff;text-decoration:none;font-size:19px;font-weight:500;
+    border-bottom:1px solid var(--line);transition:color .2s;font-family:'Jost',sans-serif;
+  }
+  .nav-links a:hover{color:var(--red);}
+  .drawer-cta{margin-top:auto;padding-top:20px;}
+  .drawer-cta a{
+    display:flex;align-items:center;justify-content:center;gap:8px;background:var(--red);color:#111;
+    padding:13px;font-weight:600;font-size:14.5px;text-decoration:none;border-radius:2px;
+  }
 </style>
 </head>
 <body id="body">
@@ -161,8 +193,42 @@
       <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
       <button id="btn-ar" onclick="setLang('ar')">AR</button>
     </div>
-  </div>
+      <button class="menu-btn" onclick="openDrawer()" aria-label="Menu">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
 </div>
+</div>
+
+<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+<nav class="drawer" id="drawer">
+  <button class="drawer-close" onclick="closeDrawer()">&times;</button>
+  <div class="nav-links">
+    <a href="../#services" class="lang-block" data-lang="en">Services</a>
+    <a href="../#services" class="lang-block" data-lang="ar" hidden>خدماتنا</a>
+
+    <a href="../portfolio/" style="color:var(--red);" class="lang-block" data-lang="en">Work We've Done</a>
+    <a href="../portfolio/" style="color:var(--red);" class="lang-block" data-lang="ar" hidden>أعمالنا</a>
+
+    <a href="../certifications/" class="lang-block" data-lang="en">Certifications</a>
+    <a href="../certifications/" class="lang-block" data-lang="ar" hidden>الشهادات</a>
+
+    <a href="../about/" class="lang-block" data-lang="en">About Andrés</a>
+    <a href="../about/" class="lang-block" data-lang="ar" hidden>عن أندريس</a>
+
+    <a href="../#custom-request" class="lang-block" data-lang="en">Custom Request</a>
+    <a href="../#custom-request" class="lang-block" data-lang="ar" hidden>طلب خاص</a>
+
+    <a href="../#contact" class="lang-block" data-lang="en">Contact</a>
+    <a href="../#contact" class="lang-block" data-lang="ar" hidden>تواصل معنا</a>
+  </div>
+  <div class="drawer-cta">
+    <a id="drawer-wa" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 2a8 8 0 0 1 6.9 12L20 20l-4.1-1.1A8 8 0 1 1 12 4Z"/></svg>
+      <span id="drawer-wa-label">Message on WhatsApp</span>
+    </a>
+  </div>
+</nav>
+
 
 <section class="phero-video">
   <video class="phero-video-el" autoplay muted loop playsinline poster="../video/hero_portfolio_poster.jpg">
@@ -298,6 +364,15 @@
 </div>
 
 <script>
+  function openDrawer(){
+    document.getElementById('drawer').classList.add('open');
+    document.getElementById('drawer-overlay').classList.add('open');
+  }
+  function closeDrawer(){
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('drawer-overlay').classList.remove('open');
+  }
+
   const WA_NUMBER = "971527951828";
   const CALL_NUMBER = "+971527951828";
   const waText = {
@@ -331,6 +406,8 @@
     document.getElementById('btn-en').classList.toggle('active', lang==='en');
     document.getElementById('btn-ar').classList.toggle('active', lang==='ar');
     document.getElementById('wa-btn').href = waLink(lang);
+    document.getElementById('drawer-wa').href = waLink(lang);
+    document.getElementById('drawer-wa-label').textContent = ctaText[lang].wa;
     document.getElementById('call-btn').href = `tel:${CALL_NUMBER}`;
     document.getElementById('wa-label').textContent = ctaText[lang].wa;
     document.getElementById('call-label').textContent = ctaText[lang].call;
@@ -416,7 +493,7 @@
 
   const observer = new IntersectionObserver((entries)=>{
     entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.classList.add('in'); observer.unobserve(entry.target); } });
-  }, {threshold:0.1});
+  }, {threshold:0, rootMargin:"0px 0px -5% 0px"});
 
   fetch('../portfolio-manifest.json').then(r => r.json()).then(data => {
     PORTFOLIO = data;

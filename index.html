@@ -252,25 +252,6 @@
     .gallery figure:first-child{grid-column:span 2;}
   }
 </style>
-  <!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1574384623528579');
-fbq('track', 'PageView');
-</script>
-<noscript>
-<img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1574384623528579&ev=PageView&noscript=1"
-/>
-</noscript>
-<!-- End Meta Pixel Code -->
 </head>
 <body id="body">
 
@@ -432,9 +413,9 @@ src="https://www.facebook.com/tr?id=1574384623528579&ev=PageView&noscript=1"
         <div class="tier-sub lang-block" data-lang="en">Premium maintenance</div>
         <div class="tier-sub lang-block" data-lang="ar" hidden>صيانة متميزة</div>
 
-        <div class="discount-tag lang-block" data-lang="en">SAVE 27%</div>
-        <div class="discount-tag lang-block" data-lang="ar" hidden>خصم 27%</div>
-        <div class="price-row"><span class="price-old">550</span><span class="price">400 <span class="cur">AED</span></span></div>
+        <div class="discount-tag lang-block" data-lang="en">SAVE 13%</div>
+        <div class="discount-tag lang-block" data-lang="ar" hidden>خصم 13%</div>
+        <div class="price-row"><span class="price-old">550</span><span class="price">480 <span class="cur">AED</span></span></div>
 
         <ul class="lang-block" data-lang="en">
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12l5 5L20 6"/></svg> Complete bike disassembly</li>
@@ -515,7 +496,7 @@ src="https://www.facebook.com/tr?id=1574384623528579&ev=PageView&noscript=1"
       <span class="section-eyebrow lang-block" data-lang="ar" hidden>المؤهلات</span>
       <h2 class="lang-block" data-lang="en">Certifications</h2>
       <h2 class="lang-block" data-lang="ar" hidden>الشهادات</h2>
-      <p class="lang-block" data-lang="en">43 certifications from Shimano T.E.C. and specialized suspension training.</p>
+      <p class="lang-block" data-lang="en">40+ certifications from Shimano T.E.C. and specialized suspension training.</p>
       <p class="lang-block" data-lang="ar" hidden>43 شهادة من Shimano T.E.C. وتدريب متخصص في أنظمة التعليق.</p>
     </div>
     <div class="cert-preview-grid reveal">
@@ -677,7 +658,7 @@ src="https://www.facebook.com/tr?id=1574384623528579&ev=PageView&noscript=1"
   const tierInfo = {
     wash:   { en: "Wash 'n Lube",  ar: "غسيل وتشحيم",         price: "85" },
     level2: { en: "Level 2",       ar: "المستوى الثاني",       price: "200" },
-    level3: { en: "Level 3",       ar: "المستوى الثالث",       price: "400" },
+    level3: { en: "Level 3",       ar: "المستوى الثالث",       price: "480" },
   };
   let selectedTier = null;
 
@@ -783,7 +764,6 @@ src="https://www.facebook.com/tr?id=1574384623528579&ev=PageView&noscript=1"
       text += ` Service needed: ${serviceText}.`;
       if(msg) text += ` Notes: ${msg}`;
     }
-    fbq('track', 'Contact');
     window.open(waLink(currentLang, text), '_blank');
     return false;
   }
@@ -795,7 +775,7 @@ src="https://www.facebook.com/tr?id=1574384623528579&ev=PageView&noscript=1"
     entries.forEach(entry=>{
       if(entry.isIntersecting){ entry.target.classList.add('in'); observer.unobserve(entry.target); }
     });
-  }, {threshold:0.12});
+  }, {threshold:0, rootMargin:"0px 0px -5% 0px"});
   document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 
   setLang('en');

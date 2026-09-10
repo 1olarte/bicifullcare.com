@@ -24,6 +24,7 @@
   .wrap{max-width:720px;margin:0 auto;padding:0 24px;}
   img{max-width:100%;display:block;}
   a{color:inherit;}
+  [hidden]{display:none !important;}
 
   .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease;}
   .reveal.in{opacity:1;transform:translateY(0);}
@@ -45,9 +46,32 @@
   }
   body[dir="rtl"] .top-controls, body[dir="rtl"] .back-link, body[dir="rtl"] .cta-bar a, body[dir="rtl"] .lang-note{font-family:'Tajawal',sans-serif;}
 
+  .menu-btn{
+    width:38px;height:38px;border:1px solid rgba(255,255,255,.3);border-radius:50%;
+    background:rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;
+    cursor:pointer;color:#fff;flex:0 0 auto;
+  }
+  .drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:70;opacity:0;pointer-events:none;transition:opacity .3s ease;}
+  .drawer-overlay.open{opacity:1;pointer-events:auto;}
+  .drawer{
+    position:fixed;top:0;right:0;height:100%;width:78%;max-width:320px;
+    background:#111;z-index:80;border-left:1px solid var(--line);
+    transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+    padding:26px 28px;display:flex;flex-direction:column;
+  }
+  body.lang-ar .drawer{right:auto;left:0;border-left:none;border-right:1px solid var(--line);transform:translateX(-100%);}
+  body.lang-ar .drawer.open{transform:translateX(0);}
+  .drawer.open{transform:translateX(0);}
+  .drawer-close{align-self:flex-end;background:none;border:none;color:#fff;font-size:26px;cursor:pointer;margin-bottom:20px;}
+  .nav-links{display:flex;flex-direction:column;gap:4px;}
+  .nav-links a{display:block;padding:14px 4px;color:#fff;text-decoration:none;font-size:19px;font-weight:500;border-bottom:1px solid var(--line);transition:color .2s;font-family:'Jost',sans-serif;}
+  .nav-links a:hover{color:var(--red);}
+  .drawer-cta{margin-top:auto;padding-top:20px;}
+  .drawer-cta a{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--red);color:#111;padding:13px;font-weight:600;font-size:14.5px;text-decoration:none;border-radius:2px;}
+
   /* Hero banner */
   .about-hero{position:relative;height:56vh;min-height:380px;max-height:560px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;}
-  .about-hero img{width:100%;height:100%;object-fit:cover;object-position:60% 40%;position:absolute;inset:0;}
+  .about-hero img{width:100%;height:100%;object-fit:cover;object-position:60% 35%;position:absolute;inset:0;}
   .about-hero-scrim{position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,10,10,.15) 0%, rgba(10,10,10,.4) 55%, rgba(10,10,10,.96) 98%);}
   .about-hero-content{position:relative;z-index:2;padding:0 24px 40px;max-width:720px;margin:0 auto;width:100%;}
   .ah-eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);font-weight:600;display:block;margin-bottom:12px;}
@@ -57,7 +81,7 @@
   .stats-row{display:flex;gap:30px;flex-wrap:wrap;padding:36px 0;border-bottom:1px solid var(--line);}
   .stats-row div{display:flex;flex-direction:column;}
   .stats-row .num{font-family:'Jost',sans-serif;font-size:26px;font-weight:700;color:#fff;}
-  .stats-row .lbl{font-size:11.5px;color:var(--fg-dim);margin-top:2px;max-width:14ch;line-height:1.3;}
+  .stats-row .lbl{font-size:11.5px;color:var(--fg-dim);margin-top:2px;max-width:15ch;line-height:1.3;}
 
   article{padding:40px 0 10px;}
   article h2{font-size:23px;font-weight:600;color:#fff;margin:44px 0 16px;letter-spacing:-.005em;}
@@ -68,8 +92,34 @@
     border-inline-start:3px solid var(--red);padding:4px 0 4px 18px;margin:30px 0;
     font-family:'Jost',sans-serif;font-size:19px;font-weight:500;color:#fff;line-height:1.5;
   }
-  .badge-row{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 10px;}
+  .badge-row{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 30px;}
   .badge-row span{border:1px solid var(--line);border-radius:20px;padding:7px 15px;font-size:12.5px;color:var(--fg-dim);}
+
+  /* Editorial photo blocks */
+  figure.photo-block{margin:34px -24px;}
+  figure.photo-block img{width:100%;cursor:zoom-in;border-radius:2px;}
+  figure.photo-block figcaption{font-size:12px;color:var(--fg-dim);text-align:center;margin-top:10px;padding:0 24px;}
+
+  .photo-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:34px 0;}
+  .photo-pair img{width:100%;height:100%;object-fit:cover;aspect-ratio:3/4;border-radius:3px;cursor:zoom-in;}
+  .photo-pair-caption{font-size:12px;color:var(--fg-dim);text-align:center;margin-top:10px;}
+
+  .carousel{display:flex;gap:12px;overflow-x:auto;margin:30px -24px;padding:0 24px 10px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;}
+  .carousel::-webkit-scrollbar{height:4px;}
+  .carousel::-webkit-scrollbar-thumb{background:var(--line);}
+  .carousel img{
+    flex:0 0 auto;height:280px;width:auto;max-width:82vw;object-fit:cover;border-radius:4px;
+    scroll-snap-align:start;cursor:zoom-in;border:1px solid var(--line);
+  }
+  .carousel-hint{font-size:11.5px;color:var(--fg-dim);text-align:center;margin-top:-16px;margin-bottom:26px;}
+
+  .video-block{margin:34px 0;display:flex;justify-content:center;}
+  .video-block video{width:100%;max-width:320px;border-radius:8px;border:1px solid var(--line);}
+
+  .lightbox{position:fixed;inset:0;background:rgba(5,5,5,.96);z-index:100;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .25s ease;}
+  .lightbox.open{opacity:1;pointer-events:auto;}
+  .lightbox img{max-width:100%;max-height:88vh;object-fit:contain;border-radius:3px;}
+  .lightbox-close{position:absolute;top:20px;inset-inline-end:20px;color:#fff;font-size:30px;background:none;border:none;cursor:pointer;}
 
   .book-cta{margin:50px 0 60px;padding:34px 28px;background:var(--red-deep);border-radius:6px;text-align:left;}
   .book-cta h2{margin:0;font-size:26px;font-weight:700;color:#fff;text-transform:uppercase;}
@@ -87,7 +137,11 @@
   .cta-whatsapp{background:var(--red);color:#fff;}
   .cta-call{background:transparent;border:1px solid rgba(255,255,255,.3);color:var(--fg);}
 
-  @media(min-width:720px){ .about-hero h1{font-size:52px;} }
+  @media(min-width:720px){
+    .about-hero h1{font-size:52px;}
+    figure.photo-block{margin:34px 0;}
+    figure.photo-block img{border-radius:6px;}
+  }
 </style>
 </head>
 <body id="body">
@@ -105,8 +159,41 @@
       <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
       <button id="btn-ar" onclick="setLang('ar')">AR</button>
     </div>
+    <button class="menu-btn" onclick="openDrawer()" aria-label="Menu">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
   </div>
 </div>
+
+<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+<nav class="drawer" id="drawer">
+  <button class="drawer-close" onclick="closeDrawer()">&times;</button>
+  <div class="nav-links">
+    <a href="../#services" class="lang-block" data-lang="en">Services</a>
+    <a href="../#services" class="lang-block" data-lang="ar" hidden>خدماتنا</a>
+
+    <a href="../portfolio/" class="lang-block" data-lang="en">Work We've Done</a>
+    <a href="../portfolio/" class="lang-block" data-lang="ar" hidden>أعمالنا</a>
+
+    <a href="../certifications/" class="lang-block" data-lang="en">Certifications</a>
+    <a href="../certifications/" class="lang-block" data-lang="ar" hidden>الشهادات</a>
+
+    <a href="../about/" style="color:var(--red);" class="lang-block" data-lang="en">About Andrés</a>
+    <a href="../about/" style="color:var(--red);" class="lang-block" data-lang="ar" hidden>عن أندريس</a>
+
+    <a href="../#custom-request" class="lang-block" data-lang="en">Custom Request</a>
+    <a href="../#custom-request" class="lang-block" data-lang="ar" hidden>طلب خاص</a>
+
+    <a href="../#contact" class="lang-block" data-lang="en">Contact</a>
+    <a href="../#contact" class="lang-block" data-lang="ar" hidden>تواصل معنا</a>
+  </div>
+  <div class="drawer-cta">
+    <a id="drawer-wa" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 2a8 8 0 0 1 6.9 12L20 20l-4.1-1.1A8 8 0 1 1 12 4Z"/></svg>
+      <span id="drawer-wa-label">Message on WhatsApp</span>
+    </a>
+  </div>
+</nav>
 
 <div class="lang-note" id="lang-note" hidden>
   <span id="lang-note-text"></span>
@@ -115,63 +202,123 @@
 <section class="about-hero">
   <img src="../images/about-banner.jpg" alt="Andrés servicing a bike in Abu Dhabi">
   <div class="about-hero-scrim"></div>
-  <div class="about-hero-content" dir="ltr">
+  <div class="about-hero-content">
     <span class="ah-eyebrow">About</span>
     <h1>Andrés Olarte</h1>
-    <p class="role">Mechanic. Educator. Engineer in the making.</p>
+    <p class="role">Mechanic. Educator. Future engineer.</p>
   </div>
 </section>
 
 <div class="wrap">
 
   <div class="stats-row reveal" dir="ltr">
-    <div><span class="num">2019</span><span class="lbl">Started at BiciFULL, Colombia</span></div>
-    <div><span class="num">16K+</span><span class="lbl">Cyclists reached online</span></div>
+    <div><span class="num">2019</span><span class="lbl">Started at Bicifull, Colombia</span></div>
+    <div><span class="num">17K+</span><span class="lbl">Cyclists reached online</span></div>
     <div><span class="num">3</span><span class="lbl">International certifying bodies</span></div>
     <div><span class="num">2</span><span class="lbl">Countries served</span></div>
   </div>
 
   <article class="reveal" dir="ltr">
-    <p class="lead">From a small workshop in Colombia to bringing professional bike service to Abu Dhabi.</p>
-    <p>My name is Andrés Olarte, and bicycles have been a part of my life for much longer than they have been a profession.</p>
-    <p>I started working with bicycles at a young age, and what began as a passion gradually became a career. In 2019, I joined BiciFULL in Cota, Colombia, where I spent the following years developing my skills as a professional bicycle mechanic. Working with everything from everyday urban bikes to high-end road and mountain bikes taught me something I still believe today: every bicycle has a story, and every mechanical problem has a reason behind it.</p>
-    <p>Over the years, I worked hands-on with drivetrains, hydraulic braking systems, suspension, wheel systems, bearings, and precision adjustments. But being a good mechanic was never just about knowing how to replace a part. I became increasingly interested in understanding why something failed, how to diagnose it correctly, and how to make sure the customer understood what was being done to their bike.</p>
 
-    <p class="pull">That mindset pushed me to keep learning.</p>
+    <p class="lead">From the family workshop in Colombia to bringing professional bicycle service to Abu Dhabi.</p>
+    <p>My name is Andrés Olarte. I'm 17 years old, and bicycles have been part of my life for much longer than they have been my profession.</p>
+    <p>I started working with bicycles at a very young age. What began as something I was passionate about slowly became my profession, and in 2019 I officially started working at Bicifull, my family's bicycle workshop in Cota, Colombia.</p>
+    <p>Bicifull was where I really learned what it means to work with bicycles.</p>
 
-    <p>I completed professional training and certifications through organizations including Park Tool Escola in Brazil, Shimano TEC, and SRAM, while continuing to develop my knowledge through real workshop experience. I also became involved in other areas of the business, including customer service, sales, administration, and digital marketing.</p>
+    <figure class="photo-block">
+      <img src="../images/about/about-1.jpg" alt="Bicifull workshop storefront in Cota, Colombia" onclick="openLightbox(this.src)">
+      <figcaption>Bicifull — the family workshop in Cota, Colombia</figcaption>
+    </figure>
 
-    <div class="badge-row">
-      <span>Park Tool Escola — Brazil</span>
-      <span>Shimano T.E.C.</span>
-      <span>SRAM</span>
+    <p>Over the years, I had the opportunity to work on all kinds of bikes — from everyday urban bicycles to high-end road and mountain bikes. I worked with drivetrains, hydraulic brakes, suspension systems, wheels, bearings, and precision adjustments.</p>
+    <p>But more importantly, I learned how to approach a bicycle.</p>
+    <p>I learned that every bike has a history, and that every mechanical problem has a reason behind it. A good mechanic shouldn't just replace a part because it looks worn or because that's what was done the last time. You have to understand what happened, diagnose the problem correctly, and find the right solution.</p>
+    <p class="pull">That way of thinking has stayed with me.</p>
+
+    <h2>Learning beyond the workshop</h2>
+    <p>As I gained experience at Bicifull, I also became increasingly interested in understanding the technical side of bicycles at a deeper level.</p>
+    <p>I completed professional training and certifications through organizations and programs including Park Tool Escola in Brazil, Shimano TEC, SRAM, Thiago Mecánico, and CIMA, and I also had the opportunity to attend the First International Congress of Professional Bicycle Mechanics, organized by AIMPB in Bogotá.</p>
+
+    <div class="carousel" id="carousel-1">
+      <img src="../images/about/about-2.jpg" alt="Andrés working at the Bicifull workshop" onclick="openLightbox(this.src)">
+      <img src="../images/about/about-3.jpg" alt="AIMPB International Congress in Bogotá" onclick="openLightbox(this.src)">
+      <img src="../images/about/about-4.jpg" alt="Certification ceremony with instructors" onclick="openLightbox(this.src)">
     </div>
+    <p class="carousel-hint">Training, certifications &amp; the AIMPB congress in Bogotá →</p>
 
-    <h2>Making bike mechanics easier to understand</h2>
-    <p>At some point, I realized that I could combine two things I really enjoyed: mechanics and communication.</p>
-    <p>I started creating educational content under <strong>@olartemecanico</strong>, explaining bicycle technology, components, common problems, maintenance, and the things that many cyclists simply never get taught.</p>
-    <p>My goal was never to make complicated videos just to look technical. It was the opposite. I wanted to make bicycle mechanics easier to understand.</p>
-    <p>Today, my content reaches a growing community of more than 16,000 cyclists and bike enthusiasts around the world across Instagram, TikTok, and YouTube. I talk about everything from Shimano and SRAM components to hydraulic brakes, suspension systems, strange noises, maintenance, diagnostics, and common cycling myths.</p>
-    <p>The questions and conversations that happen around that content have taught me just as much as the workshop has. They constantly remind me that cyclists don't just need someone who can fix a bike — they need someone they can trust.</p>
+    <p>At the same time, working in a family business taught me things that don't necessarily come from a technical course.</p>
+    <p>I was involved in customer service, sales, administration, and digital marketing. I learned how to talk to customers, understand what they actually needed, manage a business, and take responsibility for the work that leaves the workshop.</p>
+    <p>Bicifull wasn't just the place where I learned to fix bicycles.</p>
+    <p class="pull">It was where I started building my career.</p>
+
+    <h2>Making bicycle mechanics easier to understand</h2>
+    <p>At some point, I realized there were two things I really enjoyed: mechanics and communication.</p>
+    <p>So I started creating educational content under the name <strong>@olartemecanico</strong>. I began explaining bicycle technology, components, common problems, maintenance, diagnostics, and all those little things that many cyclists never get the chance to learn about.</p>
+    <p>My goal was never to make complicated videos just to sound technical. It was the opposite. I wanted to make bicycle mechanics easier to understand.</p>
+    <p>Today, that content has grown into a community of more than 17,000 cyclists and cycling enthusiasts across Instagram, TikTok, and YouTube.</p>
+
+    <div class="carousel" id="carousel-2">
+      <img src="../images/about/about-5.jpg" alt="@olartemecanico Instagram profile" onclick="openLightbox(this.src)">
+      <img src="../images/about/about-6.jpg" alt="Andrés Olarte social media profile" onclick="openLightbox(this.src)">
+      <img src="../images/about/about-7.jpg" alt="Bicifull Bike Tech YouTube channel" onclick="openLightbox(this.src)">
+    </div>
+    <p class="carousel-hint">@olartemecanico across Instagram, TikTok &amp; YouTube →</p>
+
+    <p>I talk about everything from Shimano and SRAM components to hydraulic brakes, suspension systems, strange noises, maintenance, diagnostics, and common cycling myths.</p>
+    <p>But one of the most valuable parts of creating content has been the conversations that come from it.</p>
+    <p>The questions people ask, the problems they share, and the experiences of other cyclists have taught me almost as much as working in the workshop. And they have reinforced something I already believed:</p>
+    <p class="pull">Cyclists don't just need someone who can fix a bicycle. They need someone they can trust.</p>
+
+    <figure class="photo-block">
+      <img src="../images/about/about-8.jpg" alt="Andrés with a bike in Abu Dhabi" onclick="openLightbox(this.src)">
+    </figure>
 
     <h2>A new chapter in Abu Dhabi</h2>
-    <p>After years of working in Colombia, I decided to take my experience somewhere new. I moved to the United Arab Emirates, and Abu Dhabi became the place where I wanted to build the next chapter of my career.</p>
-    <p>The cycling community here is incredibly diverse. From road cyclists and performance bikes to mountain bikes and everyday riders, there is a growing demand for reliable, professional, and convenient bicycle service.</p>
+    <p>After years of working in Colombia, I decided it was time to take what I had learned into a new environment.</p>
+    <p>I moved to the United Arab Emirates, and Abu Dhabi became the place where I wanted to begin the next chapter of my career.</p>
     <p>That is where Bicifull Care comes in.</p>
-    <p>I created Bicifull Care to bring the workshop directly to the cyclist. Instead of having to find a shop, transport your bike, wait for an opening, and come back again, I provide professional bicycle service at your home or wherever your bike needs attention in Abu Dhabi.</p>
-    <p>My work here focuses especially on detailed maintenance and diagnosis, including drivetrains, hydraulic braking systems, suspension components, shocks, dropper posts, and high-performance bicycles.</p>
 
-    <h2>More than fixing bikes</h2>
-    <p>I am also studying Industrial Engineering, because I believe being a great mechanic is only one part of building something meaningful. Engineering has taught me to look at problems differently — to think about processes, efficiency, systems, customer experience, and how things can be improved.</p>
-    <p>That combination of hands-on mechanical experience, engineering, business, and communication is what I bring to Bicifull Care.</p>
+    <div class="video-block">
+      <video controls playsinline poster="../video/about-video-1-poster.jpg">
+        <source src="../video/about-video-1.mp4" type="video/mp4">
+      </video>
+    </div>
 
-    <p class="pull">I don't want to simply repair your bicycle. I want you to understand what your bike needs, why it needs it, and to leave knowing that it has been looked after properly.</p>
+    <p>Bicifull Care was created from the experience I built at Bicifull in Colombia — the family business started by my father — with the idea of bringing that same level of care directly to cyclists here in Abu Dhabi.</p>
+    <p>Instead of having to find a workshop, transport your bicycle, wait for an available appointment, and then make another trip to pick it up, I bring the service to you.</p>
+    <p class="pull">Professional bicycle service, wherever your bike needs it.</p>
+    <p>My work focuses especially on detailed maintenance and diagnosis, including drivetrains, hydraulic braking systems, suspension forks, rear shocks, dropper posts, and other components found on high-performance mountain and road bikes.</p>
 
-    <p>Mechanic. Educator. Engineer in the making. And above all, a cyclist who cares about doing things right.</p>
+    <div class="photo-pair">
+      <img src="../images/about/about-9.jpg" alt="Road bike serviced in Abu Dhabi" onclick="openLightbox(this.src)">
+      <img src="../images/about/about-10.jpg" alt="Mountain bike serviced in Abu Dhabi" onclick="openLightbox(this.src)">
+    </div>
+    <p class="photo-pair-caption">Home service, anywhere in Abu Dhabi</p>
+
+    <p>Bicifull Care is my way of taking what I learned in Colombia and building something of my own here in Abu Dhabi.</p>
+
+    <h2>More than just fixing bicycles</h2>
+    <p>Alongside my work as a bicycle mechanic, I also study Industrial Engineering. For me, that might seem like a completely different field, but I actually see a strong connection between the two.</p>
+    <p>Mechanics taught me how to work with my hands, diagnose problems, pay attention to details, and understand how things work. Engineering is teaching me to look at problems from another perspective — processes, efficiency, systems, customer experience, and how things can be improved.</p>
+    <p>And running a business has taught me that technical knowledge is only one part of the equation.</p>
+    <p>The combination of hands-on mechanical experience, engineering, business, and communication is what I want to bring to Bicifull Care.</p>
+    <p class="pull">I don't want to simply repair your bicycle. I want you to understand what your bike needs, why it needs it, and leave knowing that it has received the care it deserves.</p>
+
+    <h2>Where it all started</h2>
+    <p>Bicifull Care may be a new chapter, but its story didn't start in Abu Dhabi.</p>
+    <p>It started years ago in a family workshop in Cota, Colombia. It started with my father creating Bicifull, and with me growing up around bicycles, tools, customers, problems to solve, and the everyday reality of running a bicycle workshop.</p>
+    <p>That experience is still at the heart of everything I do.</p>
+
+    <figure class="photo-block">
+      <img src="../images/about/about-11.jpg" alt="Andrés with fellow mechanics" onclick="openLightbox(this.src)">
+    </figure>
+
+    <p>Now I'm taking that knowledge, experience, and passion with me to a new country and a new community of cyclists.</p>
+    <p class="pull">Mechanic. Educator. Future engineer. And above all, a cyclist who cares about doing things properly.</p>
 
     <h2>Welcome to Bicifull Care</h2>
-    <p>Whether you ride for competition, weekend adventures, fitness, or simply because you love your bike, my goal is simple:</p>
-    <p class="lead">Professional bike care, brought directly to you.</p>
+    <p>Whether you ride to compete, explore, stay fit, commute, or simply because you love your bike, my goal is simple:</p>
+    <p class="lead">Professional bicycle maintenance and service, brought directly to your door in Abu Dhabi.</p>
   </article>
 
   <section class="book-cta reveal" dir="ltr">
@@ -184,6 +331,11 @@
     <p>Bicifull Care · Home service across Abu Dhabi. <span class="signature">Ride safe. Ride happy.</span></p>
   </footer>
 
+</div>
+
+<div class="lightbox" id="lightbox" onclick="if(event.target===this) closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+  <img id="lightbox-img" src="" alt="">
 </div>
 
 <div class="cta-bar">
@@ -201,16 +353,34 @@
   const WA_NUMBER = "971527951828";
   const CALL_NUMBER = "+971527951828";
   document.getElementById('wa-btn').href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Hi Bicifull Care, I'd like to book a bike service.")}`;
+  document.getElementById('drawer-wa').href = document.getElementById('wa-btn').href;
   document.getElementById('call-btn').href = `tel:${CALL_NUMBER}`;
   document.getElementById('book-btn').href = document.getElementById('wa-btn').href;
 
+  function openDrawer(){
+    document.getElementById('drawer').classList.add('open');
+    document.getElementById('drawer-overlay').classList.add('open');
+  }
+  function closeDrawer(){
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('drawer-overlay').classList.remove('open');
+  }
+
+  function openLightbox(src){
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); }
+
   function setLang(lang){
+    document.querySelectorAll('.lang-block').forEach(el=>{ el.hidden = el.dataset.lang !== lang; });
     document.getElementById('btn-en').classList.toggle('active', lang==='en');
     document.getElementById('btn-ar').classList.toggle('active', lang==='ar');
     document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
     const note = document.getElementById('lang-note');
     const backLabel = document.getElementById('back-label');
     const waLabel = document.getElementById('wa-label');
+    const drawerWaLabel = document.getElementById('drawer-wa-label');
     const callLabel = document.getElementById('call-label');
     const bookLabel = document.getElementById('book-label');
     if(lang === 'ar'){
@@ -218,12 +388,14 @@
       document.getElementById('lang-note-text').textContent = 'هذه الصفحة متوفرة حالياً باللغة الإنجليزية فقط.';
       backLabel.textContent = 'العودة للرئيسية';
       if(waLabel) waLabel.textContent = 'راسلنا عبر واتساب';
+      if(drawerWaLabel) drawerWaLabel.textContent = 'راسلنا عبر واتساب';
       if(callLabel) callLabel.textContent = 'اتصل الآن';
       if(bookLabel) bookLabel.textContent = 'احجز الآن';
     } else {
       note.hidden = true;
       backLabel.textContent = 'Back to home';
       if(waLabel) waLabel.textContent = 'Message on WhatsApp';
+      if(drawerWaLabel) drawerWaLabel.textContent = 'Message on WhatsApp';
       if(callLabel) callLabel.textContent = 'Call now';
       if(bookLabel) bookLabel.textContent = 'Book now';
     }
@@ -234,7 +406,7 @@
 
   const observer = new IntersectionObserver((entries)=>{
     entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.classList.add('in'); observer.unobserve(entry.target); } });
-  }, {threshold:0.1});
+  }, {threshold:0, rootMargin:"0px 0px -5% 0px"});
   document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 </script>
 

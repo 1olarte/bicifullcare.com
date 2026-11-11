@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>Panel · Bicifull Care</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
+<style>
+  :root{--bg:#0b0b0b;--panel:#141414;--panel2:#1b1b1b;--line:rgba(255,255,255,.1);--fg:#f4f3f1;--dim:#9a988f;--red:#e21313;--green:#3ddc84;--amber:#f5b942;--blue:#7db7ff;}
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;-webkit-font-smoothing:antialiased;}
+  [hidden]{display:none !important;}
+  h1,h2,h3{margin:0;font-weight:600;}
+  button{font-family:inherit;}
+  .wrap{max-width:760px;margin:0 auto;padding:0 18px 90px;}
+
+  /* lock */
+  #lock{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+  .lock-card{width:100%;max-width:380px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:28px 24px;}
+  .lock-card img{height:30px;margin-bottom:18px;}
+  .lock-card h1{font-size:20px;margin-bottom:6px;}
+  .lock-card p{color:var(--dim);font-size:13.5px;line-height:1.55;margin:0 0 18px;}
+  .err{color:#ff6b6b;font-size:13px;margin:10px 0 0;min-height:18px;}
+  .linklike{background:none;border:none;color:var(--dim);font-size:12.5px;text-decoration:underline;cursor:pointer;margin-top:14px;padding:0;}
+
+  /* top bar + tabs */
+  .top{display:flex;align-items:center;justify-content:space-between;padding:16px 0 10px;}
+  .top img{height:26px;}
+  .tabs{display:flex;gap:6px;overflow-x:auto;padding:6px 0 14px;border-bottom:1px solid var(--line);margin-bottom:20px;position:sticky;top:0;background:var(--bg);z-index:5;}
+  .tab{flex:0 0 auto;background:var(--panel);border:1px solid var(--line);color:var(--dim);border-radius:20px;padding:9px 15px;font-size:13.5px;cursor:pointer;}
+  .tab.on{background:var(--red);border-color:var(--red);color:#fff;}
+  .badge{background:var(--amber);color:#111;border-radius:10px;font-size:11px;font-weight:700;padding:1px 6px;margin-inline-start:6px;}
+
+  /* form */
+  label{display:block;font-size:12.5px;color:var(--dim);margin:0 0 6px;}
+  input,select,textarea{width:100%;background:var(--panel);border:1px solid var(--line);color:var(--fg);padding:12px 13px;border-radius:6px;font-size:15px;font-family:inherit;color-scheme:dark;}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--red);}
+  textarea{min-height:84px;resize:vertical;}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .f{margin-bottom:14px;}
+  .sec{margin:26px 0 12px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--red);font-weight:700;}
+  .checks{display:grid;grid-template-columns:1fr;gap:6px;}
+  .chk{display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:11px 12px;font-size:14.5px;color:var(--fg);margin:0;cursor:pointer;}
+  .chk input{width:18px;height:18px;accent-color:var(--red);margin:0;flex:0 0 auto;}
+  .comp{display:grid;grid-template-columns:110px 1fr;gap:10px;align-items:center;margin-bottom:8px;}
+  .comp span{font-size:14px;}
+  .photos{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+  .ph{position:relative;width:76px;height:76px;border-radius:6px;overflow:hidden;border:1px solid var(--line);}
+  .ph img{width:100%;height:100%;object-fit:cover;}
+  .ph button{position:absolute;top:2px;right:2px;width:22px;height:22px;border-radius:50%;border:none;background:rgba(0,0,0,.75);color:#fff;cursor:pointer;font-size:14px;line-height:1;}
+  .hint{font-size:12px;color:var(--dim);margin-top:5px;line-height:1.5;}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:6px;padding:13px 18px;font-size:14.5px;font-weight:600;cursor:pointer;background:var(--red);color:#fff;}
+  .btn.sec2{background:transparent;border:1px solid rgba(255,255,255,.3);}
+  .btn.sm{padding:8px 12px;font-size:13px;}
+  .btn.danger{background:#7a1010;}
+  .btn:disabled{opacity:.5;}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;}
+
+  /* lists */
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px;margin-bottom:12px;}
+  .card h3{font-size:16px;}
+  .meta{font-size:13px;color:var(--dim);margin-top:4px;line-height:1.5;}
+  .pill{display:inline-block;font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:20px;margin-inline-end:6px;background:var(--panel2);border:1px solid var(--line);}
+  .pill.l2{color:var(--blue);} .pill.l3{color:var(--red);} .pill.w{color:var(--green);}
+  .pill.over{color:#ff6b6b;border-color:#ff6b6b55;} .pill.soon{color:var(--amber);border-color:#f5b94255;} .pill.ok{color:var(--green);}
+  .card .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+  .stats{display:flex;gap:22px;margin:4px 0 18px;}
+  .stats b{display:block;font-size:24px;}
+  .stats span{font-size:12px;color:var(--dim);}
+  .empty{color:var(--dim);text-align:center;padding:40px 10px;font-size:14px;}
+  .banner{background:#2a2108;border:1px solid #6b5416;color:#f5d98a;border-radius:8px;padding:12px 14px;font-size:13.5px;margin-bottom:16px;}
+  #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#222;border:1px solid var(--line);padding:11px 18px;border-radius:24px;font-size:14px;z-index:99;opacity:0;pointer-events:none;transition:opacity .25s;}
+  #toast.show{opacity:1;}
+  @media(max-width:520px){.row{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<!-- ================= LOCK ================= -->
+<div id="lock" hidden>
+  <form class="lock-card" id="lock-form" autocomplete="on">
+    <img src="../images/logo.png" alt="Bicifull Care">
+    <h1 id="lock-title">Acceso</h1>
+    <p id="lock-sub"></p>
+    <div class="f"><label for="l-user">Usuario</label><input id="l-user" autocomplete="username" required></div>
+    <div class="f"><label for="l-pass">Contraseña</label><input id="l-pass" type="password" autocomplete="current-password" required></div>
+    <div class="f" id="l-confirm-wrap" hidden><label for="l-pass2">Repite la contraseña</label><input id="l-pass2" type="password" autocomplete="new-password"></div>
+    <button class="btn" style="width:100%" id="lock-btn" type="submit">Entrar</button>
+    <div class="err" id="lock-err"></div>
+    <button class="linklike" type="button" id="forgot" hidden>¿Olvidaste la contraseña?</button>
+  </form>
+</div>
+
+<!-- ================= APP ================= -->
+<div id="app" hidden>
+<div class="wrap">
+  <div class="top">
+    <img src="../images/logo.png" alt="Bicifull Care">
+    <button class="btn sec2 sm" id="btn-lock">Bloquear</button>
+  </div>
+  <div class="tabs">
+    <button class="tab on" data-tab="new">Nuevo trabajo</button>
+    <button class="tab" data-tab="list">Registros</button>
+    <button class="tab" data-tab="up">Próximos servicios <span class="badge" id="up-badge" hidden>0</span></button>
+    <button class="tab" data-tab="set">Ajustes</button>
+  </div>
+
+  <div id="backup-banner" class="banner" hidden>Hace más de 14 días que no haces una copia de seguridad. Tus datos viven solo en este dispositivo: ve a <b>Ajustes → Exportar copia</b>.</div>
+
+  <!-- NEW -->
+  <section id="v-new">
+    <h2 id="form-title" style="margin-bottom:6px">Registrar trabajo</h2>
+    <div class="hint" style="margin-bottom:6px">Al guardar, puedes generar el informe PDF para el cliente.</div>
+
+    <div class="sec">Cliente</div>
+    <div class="row">
+      <div class="f"><label>Nombre *</label><input id="f-name" autocomplete="off"></div>
+      <div class="f"><label>Teléfono / WhatsApp *</label><input id="f-phone" inputmode="tel" placeholder="+971 5X XXX XXXX"></div>
+    </div>
+
+    <div class="sec">Bicicleta</div>
+    <div class="row">
+      <div class="f"><label>Tipo</label>
+        <select id="f-type"><option>Road</option><option>MTB</option><option>Gravel</option><option>E-bike</option><option>Urban</option><option>Other</option></select></div>
+      <div class="f"><label>Marca</label><input id="f-brand" autocomplete="off"></div>
+    </div>
+    <div class="f"><label>Modelo</label><input id="f-model" autocomplete="off"></div>
+
+    <div class="sec">Servicio</div>
+    <div class="row">
+      <div class="f"><label>Nivel *</label>
+        <select id="f-level"><option value="wash">Wash 'n Lube</option><option value="level2">Level 2</option><option value="level3">Level 3</option></select></div>
+      <div class="f"><label>Fecha del servicio *</label><input id="f-date" type="date"></div>
+    </div>
+    <label>Checklist de lo realizado</label>
+    <div class="checks" id="checklist"></div>
+    <div class="f" style="margin-top:12px"><label>Trabajos extra (uno por línea)</label><textarea id="f-extras" placeholder="Ej: Cambio de pastillas&#10;Instalación de cinta de manubrio"></textarea></div>
+
+    <div class="sec">Estado de componentes</div>
+    <div id="comps"></div>
+    <div class="hint">Los que dejes en “—” no aparecen en el informe.</div>
+
+    <div class="sec">Detalle</div>
+    <div class="f"><label>Repuestos utilizados</label><textarea id="f-parts"></textarea></div>
+    <div class="f"><label>Resumen / notas del mecánico</label><textarea id="f-notes" placeholder="Cómo llegó la bici, qué encontraste, qué hiciste…"></textarea></div>
+
+    <div class="sec">Próximo servicio</div>
+    <div class="row">
+      <div class="f"><label>Uso de la bici</label>
+        <select id="f-use"><option value="heavy">Intenso</option><option value="normal" selected>Normal</option><option value="light">Ligero</option></select></div>
+      <div class="f"><label>Fecha sugerida</label><input id="f-next" type="date"></div>
+    </div>
+    <div class="hint" id="next-hint" style="margin:-6px 0 12px"></div>
+    <div class="f"><label>Próxima recomendación</label><textarea id="f-reco"></textarea></div>
+
+    <div class="sec">Valor</div>
+    <div class="row">
+      <div class="f"><label>Valor del servicio (AED)</label><input id="f-value" type="number" min="0" inputmode="decimal"></div>
+      <div class="f"><label>&nbsp;</label><label class="chk"><input type="checkbox" id="f-showprice" checked> Mostrar precio en el PDF</label></div>
+    </div>
+
+    <div class="sec">Fotos</div>
+    <div class="f"><label>ANTES</label><input type="file" id="p-before" accept="image/*" multiple><div class="photos" id="ph-before"></div></div>
+    <div class="f"><label>DESPUÉS</label><input type="file" id="p-after" accept="image/*" multiple><div class="photos" id="ph-after"></div></div>
+
+    <div class="actions">
+      <button class="btn" id="save">Guardar</button>
+      <button class="btn sec2" id="save-pdf">Guardar y generar PDF</button>
+      <button class="btn sec2" id="cancel-edit" hidden>Cancelar edición</button>
+    </div>
+  </section>
+
+  <!-- LIST -->
+  <section id="v-list" hidden>
+    <div class="stats"><div><b id="st-count">0</b><span>trabajos</span></div><div><b id="st-total">0</b><span>AED registrados</span></div></div>
+    <div class="f"><input id="q" placeholder="Buscar por cliente, marca o modelo…"></div>
+    <div id="jobs"></div>
+  </section>
+
+  <!-- UPCOMING -->
+  <section id="v-up" hidden>
+    <div class="actions" style="margin:0 0 16px"><button class="btn sec2 sm" id="ics-all">Exportar todos a calendario (.ics)</button></div>
+    <div class="hint" style="margin:-6px 0 16px">Cada evento trae un recordatorio 3 días antes. Importa el .ics en Google Calendar (Ajustes → Importar y exportar) o usa “Añadir a Google Calendar” en cada servicio.</div>
+    <div id="ups"></div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section id="v-set" hidden>
+    <div class="sec" style="margin-top:0">Reseñas</div>
+    <div class="f"><label>Enlace de reseña de Google (se incluye en el mensaje de agradecimiento)</label><input id="s-review" placeholder="https://g.page/r/…"></div>
+    <button class="btn sec2 sm" id="s-save">Guardar ajustes</button>
+
+    <div class="sec">Copia de seguridad</div>
+    <div class="hint" style="margin:0 0 10px">Tus registros y fotos se guardan <b>solo en este navegador/dispositivo</b>. Exporta una copia con frecuencia y guárdala en Drive o en tu correo.</div>
+    <div class="actions" style="margin-top:0"><button class="btn sec2 sm" id="exp">Exportar copia (.json)</button>
+      <label class="btn sec2 sm" style="margin:0;cursor:pointer">Importar copia<input type="file" id="imp" accept="application/json" hidden></label></div>
+
+    <div class="sec">Cambiar contraseña</div>
+    <div class="row"><div class="f"><label>Actual</label><input type="password" id="pw-old" autocomplete="current-password"></div>
+    <div class="f"><label>Nueva (mín. 6)</label><input type="password" id="pw-new" autocomplete="new-password"></div></div>
+    <button class="btn sec2 sm" id="pw-save">Cambiar</button>
+    <div class="err" id="pw-err"></div>
+
+    <div class="sec">Zona de peligro</div>
+    <button class="btn danger sm" id="wipe">Borrar todos los registros</button>
+  </section>
+</div>
+</div>
+
+<div id="toast"></div>
+<script src="jspdf.umd.min.js"></script>
+<script>
+/* ========================================================= constants */
+const LEVELS = {
+  wash:   { name: "Wash 'n Lube", price: 85,  cls: 'w',  items: ['Full wash and cleaning','Brake & gear setup','Chain & cable lubrication','Air calibration'] },
+  level2: { name: 'Level 2',      price: 200, cls: 'l2', items: ['Bearings check','Re-grease seatpost','Pistons lubrication','Torque check','Tire fitting','Rust-free screws','General diagnostic','Pulley greasing'] },
+  level3: { name: 'Level 3',      price: 480, cls: 'l3', items: ['Complete bike disassembly','Headset greasing','Bottom bracket greasing','Hubs greasing','Hub core greasing','Fine-tune adjustments','Suspension diagnostic'] },
+};
+const COMPONENTS = ['Brakes','Drivetrain','Tires','Bearings','Suspension'];
+const CONDITIONS = ['Good','Needs attention','Inspected','Requires inspection','Replaced','N/A'];
+/* Next service intervals in days (from your notes): Level 2 every 1.5-2 months, Level 3 every 5-6 months. Wash 'n Lube: no date. */
+const INTERVALS = { level2: { heavy: 45, normal: 53, light: 60 }, level3: { heavy: 150, normal: 165, light: 180 } };
+const DEFAULT_RECO = {
+  wash:   "Wash 'n Lube again as needed, depending on how much you ride. If you notice changes in shifting or braking, a Level 2 service is recommended.",
+  level2: "Level 2 service again around the suggested date, depending on how much you ride. A Wash 'n Lube in between keeps the drivetrain clean.",
+  level3: "Level 3 premium maintenance again around the suggested date. For heavy use (rain, sand, racing) a Level 2 check in between is recommended.",
+};
+const AUTH_KEY = 'bfc_admin_auth_v1', SET_KEY = 'bfc_admin_settings_v1';
+
+/* ========================================================= helpers */
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad = (n) => String(n).padStart(2, '0');
+const todayISO = () => { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; };
+function addDays(iso, n){ const d = new Date(iso + 'T12:00:00'); d.setDate(d.getDate() + n); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }
+function fmtDate(iso){ if(!iso) return ''; return new Date(iso + 'T12:00:00').toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }); }
+function daysUntil(iso){ return Math.round((new Date(iso + 'T12:00:00') - new Date(todayISO() + 'T12:00:00')) / 86400000); }
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+function toast(msg){ const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('show'), 2600); }
+function download(blob, name){ const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500); }
+const getSettings = () => { try { return JSON.parse(localStorage.getItem(SET_KEY)) || {}; } catch(e){ return {}; } };
+const setSettings = (s) => localStorage.setItem(SET_KEY, JSON.stringify(s));
+function waNumber(p){ let d = (p || '').replace(/\D/g, ''); if(d.startsWith('00')) d = d.slice(2); if(d.startsWith('0') && d.length === 10) d = '971' + d.slice(1); else if(d.length === 9 && d.startsWith('5')) d = '971' + d; return d; }
+const firstName = (n) => (n || '').trim().split(/\s+/)[0] || 'there';
+const bikeStr = (j) => [j.brand, j.model].filter(Boolean).join(' ') || j.bikeType || 'bike';
+
+/* ========================================================= IndexedDB */
+let db;
+function openDB(){ return new Promise((res, rej) => { const r = indexedDB.open('bicifull-admin', 1); r.onupgradeneeded = () => r.result.createObjectStore('jobs', { keyPath: 'id' }); r.onsuccess = () => { db = r.result; res(); }; r.onerror = () => rej(r.error); }); }
+const store = (m) => db.transaction('jobs', m).objectStore('jobs');
+const dbAll = () => new Promise((res, rej) => { const q = store('readonly').getAll(); q.onsuccess = () => res(q.result); q.onerror = () => rej(q.error); });
+const dbPut = (j) => new Promise((res, rej) => { const q = store('readwrite').put(j); q.onsuccess = () => res(); q.onerror = () => rej(q.error); });
+const dbDel = (id) => new Promise((res, rej) => { const q = store('readwrite').delete(id); q.onsuccess = () => res(); q.onerror = () => rej(q.error); });
+const dbClear = () => new Promise((res, rej) => { const q = store('readwrite').clear(); q.onsuccess = () => res(); q.onerror = () => rej(q.error); });
+
+/* ========================================================= auth */
+const enc = new TextEncoder();
+const b64 = (u8) => btoa(String.fromCharCode(...u8));
+const unb64 = (s) => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+async function derive(pw, saltB64){
+  const key = await crypto.subtle.importKey('raw', enc.encode(pw), 'PBKDF2', false, ['deriveBits']);
+  const bits = await crypto.subtle.deriveBits({ name:'PBKDF2', salt: unb64(saltB64), iterations: 150000, hash:'SHA-256' }, key, 256);
+  return b64(new Uint8Array(bits));
+}
+function lockMode(){
+  const has = !!localStorage.getItem(AUTH_KEY);
+  $('lock').hidden = false; $('app').hidden = true;
+  $('lock-title').textContent = has ? 'Acceso' : 'Crea tu acceso';
+  $('lock-sub').textContent = has ? 'Introduce tu usuario y contraseña.' : 'Primera vez: elige un usuario y una contraseña. Quedan guardados solo en este dispositivo.';
+  $('l-confirm-wrap').hidden = has; $('forgot').hidden = !has;
+  $('lock-btn').textContent = has ? 'Entrar' : 'Crear acceso';
+  $('l-pass').autocomplete = has ? 'current-password' : 'new-password';
+}
+$('lock-form').addEventListener('submit', async (e) => {
+  e.preventDefault(); $('lock-err').textContent = '';
+  const user = $('l-user').value.trim(), pw = $('l-pass').value;
+  const raw = localStorage.getItem(AUTH_KEY);
+  try{
+    if(!raw){
+      if(pw.length < 6) return $('lock-err').textContent = 'La contraseña debe tener al menos 6 caracteres.';
+      if(pw !== $('l-pass2').value) return $('lock-err').textContent = 'Las contraseñas no coinciden.';
+      const salt = b64(crypto.getRandomValues(new Uint8Array(16)));
+      localStorage.setItem(AUTH_KEY, JSON.stringify({ user, salt, hash: await derive(pw, salt) }));
+    } else {
+      const a = JSON.parse(raw);
+      if(user !== a.user || await derive(pw, a.salt) !== a.hash) return $('lock-err').textContent = 'Usuario o contraseña incorrectos.';
+    }
+    sessionStorage.setItem('bfc_unlocked', '1'); $('l-pass').value = ''; $('l-pass2').value = '';
+    await enterApp();
+  } catch(err){ $('lock-err').textContent = 'Error: ' + err.message; }
+});
+$('forgot').addEventListener('click', () => {
+  const t = prompt('Esto borra solo el usuario y la contraseña (tus registros se conservan) para que puedas crear un acceso nuevo.\n\nEscribe RESETEAR para continuar:');
+  if(t === 'RESETEAR'){ localStorage.removeItem(AUTH_KEY); sessionStorage.removeItem('bfc_unlocked'); lockMode(); }
+});
+$('btn-lock').addEventListener('click', () => { sessionStorage.removeItem('bfc_unlocked'); lockMode(); });
+
+/* ========================================================= tabs */
+function showTab(name){
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t.dataset.tab === name));
+  ['new','list','up','set'].forEach(n => $('v-' + n).hidden = n !== name);
+  if(name === 'list') renderList(); if(name === 'up') renderUp(); if(name === 'set') loadSettings();
+  window.scrollTo(0, 0);
+}
+document.querySelector('.tabs').addEventListener('click', (e) => { const t = e.target.closest('.tab'); if(t) showTab(t.dataset.tab); });
+
+/* ========================================================= form */
+let editingId = null, photos = { before: [], after: [] }, lastAutoReco = '', lastAutoValue = '', nextTouched = false;
+
+function buildStaticForm(){
+  $('comps').innerHTML = COMPONENTS.map(c => `<div class="comp"><span>${c}</span><select id="c-${c}"><option value="">—</option>${CONDITIONS.map(o => `<option>${o}</option>`).join('')}</select></div>`).join('');
+  $('f-date').value = todayISO();
+  renderChecklist(); applyLevelDefaults();
+}
+function renderChecklist(checked){
+  const lv = $('f-level').value;
+  $('checklist').innerHTML = LEVELS[lv].items.map((it, i) => `<label class="chk"><input type="checkbox" data-item="${esc(it)}" ${(checked ? checked[it] : true) ? 'checked' : ''}> ${esc(it)}</label>`).join('');
+}
+function calcNext(level, date, use){ const iv = INTERVALS[level]; return iv && date ? addDays(date, iv[use]) : ''; }
+function applyLevelDefaults(){
+  const lv = $('f-level').value;
+  if(!$('f-value').value || $('f-value').value === lastAutoValue){ $('f-value').value = LEVELS[lv].price; lastAutoValue = String(LEVELS[lv].price); }
+  if(!$('f-reco').value || $('f-reco').value === lastAutoReco){ $('f-reco').value = DEFAULT_RECO[lv]; lastAutoReco = DEFAULT_RECO[lv]; }
+  recalcNext();
+}
+function recalcNext(force){
+  const lv = $('f-level').value;
+  if(nextTouched && !force) return;
+  const nd = calcNext(lv, $('f-date').value, $('f-use').value);
+  $('f-next').value = nd;
+  $('next-hint').textContent = nd ? `Calculada: ${lv === 'level2' ? 'Level 2 cada 1.5–2 meses' : 'Level 3 cada 5–6 meses'}, según el uso. Puedes cambiarla.` : "Wash 'n Lube: no se calcula una fecha (puedes poner una a mano).";
+}
+$('f-level').addEventListener('change', () => { renderChecklist(); applyLevelDefaults(); });
+$('f-date').addEventListener('change', () => recalcNext());
+$('f-use').addEventListener('change', () => { nextTouched = false; recalcNext(); });
+$('f-next').addEventListener('input', () => { nextTouched = true; });
+
+function readPhoto(file){
+  return new Promise((res, rej) => {
+    const fr = new FileReader();
+    fr.onload = () => { const img = new Image(); img.onload = () => {
+      const max = 1400, s = Math.min(1, max / Math.max(img.width, img.height));
+      const w = Math.round(img.width * s), h = Math.round(img.height * s);
+      const c = document.createElement('canvas'); c.width = w; c.height = h;
+      c.getContext('2d').drawImage(img, 0, 0, w, h);
+      res({ d: c.toDataURL('image/jpeg', 0.8), w, h });
+    }; img.onerror = () => rej(new Error('No se pudo leer la imagen')); img.src = fr.result; };
+    fr.onerror = () => rej(fr.error); fr.readAsDataURL(file);
+  });
+}
+function renderPhotos(){
+  ['before','after'].forEach(k => {
+    $('ph-' + k).innerHTML = photos[k].map((p, i) => `<div class="ph"><img src="${p.d}" alt=""><button type="button" data-rm="${k}:${i}">×</button></div>`).join('');
+  });
+}
+['before','after'].forEach(k => $('p-' + k).addEventListener('change', async (e) => {
+  for(const f of e.target.files){ try { photos[k].push(await readPhoto(f)); } catch(err){ toast(err.message); } }
+  e.target.value = ''; renderPhotos();
+}));
+document.addEventListener('click', (e) => { const b = e.target.closest('[data-rm]'); if(!b) return; const [k, i] = b.dataset.rm.split(':'); photos[k].splice(+i, 1); renderPhotos(); });
+
+function collect(){
+  const checklist = {}; document.querySelectorAll('#checklist input').forEach(c => checklist[c.dataset.item] = c.checked);
+  const conditions = {}; COMPONENTS.forEach(c => { if($('c-' + c).value) conditions[c] = $('c-' + c).value; });
+  return {
+    id: editingId || uid(), createdAt: editingId ? (collect._created || Date.now()) : Date.now(),
+    clientName: $('f-name').value.trim(), phone: $('f-phone').value.trim(),
+    bikeType: $('f-type').value, brand: $('f-brand').value.trim(), model: $('f-model').value.trim(),
+    level: $('f-level').value, date: $('f-date').value, checklist,
+    extras: $('f-extras').value.split('\n').map(s => s.trim()).filter(Boolean),
+    conditions, parts: $('f-parts').value.trim(), notes: $('f-notes').value.trim(),
+    use: $('f-use').value, nextDate: $('f-next').value, reco: $('f-reco').value.trim(),
+    value: $('f-value').value === '' ? null : Number($('f-value').value), showPrice: $('f-showprice').checked,
+    photosBefore: photos.before, photosAfter: photos.after, nextDismissed: false,
+  };
+}
+function resetForm(){
+  editingId = null; photos = { before: [], after: [] }; nextTouched = false; lastAutoReco = ''; lastAutoValue = '';
+  ['f-name','f-phone','f-brand','f-model','f-extras','f-parts','f-notes','f-reco','f-value'].forEach(i => $(i).value = '');
+  $('f-type').value = 'Road'; $('f-level').value = 'wash'; $('f-use').value = 'normal'; $('f-date').value = todayISO(); $('f-showprice').checked = true;
+  COMPONENTS.forEach(c => $('c-' + c).value = '');
+  renderChecklist(); applyLevelDefaults(); renderPhotos();
+  $('form-title').textContent = 'Registrar trabajo'; $('cancel-edit').hidden = true;
+}
+function loadIntoForm(j){
+  editingId = j.id; collect._created = j.createdAt; photos = { before: [...(j.photosBefore || [])], after: [...(j.photosAfter || [])] };
+  $('f-name').value = j.clientName; $('f-phone').value = j.phone; $('f-type').value = j.bikeType || 'Road'; $('f-brand').value = j.brand || ''; $('f-model').value = j.model || '';
+  $('f-level').value = j.level; $('f-date').value = j.date; renderChecklist(j.checklist || {});
+  $('f-extras').value = (j.extras || []).join('\n'); COMPONENTS.forEach(c => $('c-' + c).value = (j.conditions || {})[c] || '');
+  $('f-parts').value = j.parts || ''; $('f-notes').value = j.notes || ''; $('f-use').value = j.use || 'normal';
+  $('f-next').value = j.nextDate || ''; nextTouched = true; $('next-hint').textContent = '';
+  $('f-reco').value = j.reco || ''; lastAutoReco = ''; $('f-value').value = j.value ?? ''; lastAutoValue = ''; $('f-showprice').checked = j.showPrice !== false;
+  renderPhotos(); $('form-title').textContent = 'Editar trabajo'; $('cancel-edit').hidden = false; showTab('new');
+}
+async function save(thenPdf){
+  const j = collect();
+  if(!j.clientName || !j.phone || !j.date) return toast('Faltan nombre, teléfono o fecha');
+  try{
+    await dbPut(j); toast('Guardado');
+    if(thenPdf) await makePdf(j, 'save');
+    resetForm(); await refreshBadge();
+  } catch(err){ toast('Error al guardar: ' + err.message); console.error(err); }
+}
+$('save').addEventListener('click', () => save(false));
+$('save-pdf').addEventListener('click', () => save(true));
+$('cancel-edit').addEventListener('click', resetForm);
+
+/* ========================================================= records */
+function levelPill(j){ const L = LEVELS[j.level]; return `<span class="pill ${L.cls}">${esc(L.name)}</span>`; }
+async function renderList(){
+  const all = (await dbAll()).sort((a, b) => (b.date || '').localeCompare(a.date || '') || b.createdAt - a.createdAt);
+  const q = $('q').value.trim().toLowerCase();
+  const rows = q ? all.filter(j => [j.clientName, j.brand, j.model, j.phone].join(' ').toLowerCase().includes(q)) : all;
+  $('st-count').textContent = all.length; $('st-total').textContent = all.reduce((s, j) => s + (j.value || 0), 0).toLocaleString('en-US');
+  $('jobs').innerHTML = rows.length ? rows.map(j => `
+    <div class="card" data-id="${j.id}">
+      <h3>${esc(j.clientName)}</h3>
+      <div class="meta">${levelPill(j)}${esc(bikeStr(j))} · ${fmtDate(j.date)}${j.value != null ? ' · ' + j.value + ' AED' : ''}</div>
+      <div class="meta">${j.nextDate ? 'Próximo: ' + fmtDate(j.nextDate) : 'Sin fecha de próximo servicio'} · ${(j.photosBefore || []).length + (j.photosAfter || []).length} fotos</div>
+      <div class="btns">
+        <button class="btn sm" data-act="pdf">PDF</button>
+        <button class="btn sm sec2" data-act="share">Compartir PDF</button>
+        <button class="btn sm sec2" data-act="thanks">WhatsApp: gracias + reseña</button>
+        <button class="btn sm sec2" data-act="edit">Editar</button>
+        <button class="btn sm sec2" data-act="del">Borrar</button>
+      </div>
+    </div>`).join('') : `<div class="empty">${q ? 'Sin resultados.' : 'Aún no hay trabajos registrados.'}</div>`;
+}
+$('q').addEventListener('input', renderList);
+$('jobs').addEventListener('click', async (e) => {
+  const b = e.target.closest('[data-act]'); if(!b) return;
+  const id = b.closest('.card').dataset.id; const j = (await dbAll()).find(x => x.id === id); if(!j) return;
+  const act = b.dataset.act;
+  if(act === 'pdf') makePdf(j, 'save');
+  if(act === 'share') makePdf(j, 'share');
+  if(act === 'thanks') window.open('https://wa.me/' + waNumber(j.phone) + '?text=' + encodeURIComponent(thanksMsg(j)), '_blank');
+  if(act === 'edit') loadIntoForm(j);
+  if(act === 'del' && confirm(`¿Borrar el trabajo de ${j.clientName}? No se puede deshacer.`)){ await dbDel(id); toast('Borrado'); renderList(); refreshBadge(); }
+});
+function thanksMsg(j){
+  const link = getSettings().review;
+  return `Hi ${firstName(j.clientName)}, thank you for trusting Bicifull Care with your ${bikeStr(j)}! I'm sending your service report with before and after photos. If you're happy with the work, an honest Google review helps a lot${link ? ': ' + link : '.'} Ride safe! Andrés`;
+}
+function reminderMsg(j){
+  return `Hi ${firstName(j.clientName)}, this is Andrés from Bicifull Care. Based on your last service on ${fmtDate(j.date)}, your ${bikeStr(j)} is due for its ${LEVELS[j.level].name} around ${fmtDate(j.nextDate)}. Would you like me to book a time that suits you?`;
+}
+
+/* ========================================================= upcoming + calendar */
+function evTitle(j){ return `Bicifull Care: ${LEVELS[j.level].name} due · ${j.clientName} (${bikeStr(j)})`; }
+function evDesc(j){ return `Client: ${j.clientName}\nPhone: ${j.phone}\nBike: ${bikeStr(j)}\nLast service: ${LEVELS[j.level].name} on ${fmtDate(j.date)}\nRecommendation: ${j.reco || '-'}`; }
+function gcalLink(j){
+  const s = j.nextDate.replace(/-/g, ''), e = addDays(j.nextDate, 1).replace(/-/g, '');
+  return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(evTitle(j)) + '&dates=' + s + '/' + e + '&details=' + encodeURIComponent(evDesc(j));
+}
+const icsEsc = (s) => String(s).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
+function vevent(j){
+  const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
+  return ['BEGIN:VEVENT', `UID:${j.id}@bicifullcare.com`, `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${j.nextDate.replace(/-/g, '')}`, `DTEND;VALUE=DATE:${addDays(j.nextDate, 1).replace(/-/g, '')}`,
+    `SUMMARY:${icsEsc(evTitle(j))}`, `DESCRIPTION:${icsEsc(evDesc(j))}`, 'BEGIN:VALARM', 'ACTION:DISPLAY', `DESCRIPTION:${icsEsc(evTitle(j))}`, 'TRIGGER:-P3D', 'END:VALARM', 'END:VEVENT'].join('\r\n');
+}
+const vcal = (events) => ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Bicifull Care//Admin//EN', 'CALSCALE:GREGORIAN', ...events, 'END:VCALENDAR'].join('\r\n') + '\r\n';
+async function upcoming(){ return (await dbAll()).filter(j => j.nextDate && !j.nextDismissed).sort((a, b) => a.nextDate.localeCompare(b.nextDate)); }
+async function refreshBadge(){
+  const up = (await upcoming()).filter(j => daysUntil(j.nextDate) <= 14);
+  $('up-badge').hidden = !up.length; $('up-badge').textContent = up.length;
+  const last = Number(localStorage.getItem('bfc_last_backup') || 0); const n = (await dbAll()).length;
+  $('backup-banner').hidden = !(n > 0 && Date.now() - last > 14 * 86400000);
+}
+async function renderUp(){
+  const ups = await upcoming();
+  $('ups').innerHTML = ups.length ? ups.map(j => {
+    const d = daysUntil(j.nextDate);
+    const chip = d < 0 ? `<span class="pill over">Vencido hace ${-d} d</span>` : d <= 14 ? `<span class="pill soon">En ${d} d</span>` : `<span class="pill ok">En ${d} d</span>`;
+    return `<div class="card" data-id="${j.id}">
+      <h3>${esc(j.clientName)}</h3>
+      <div class="meta">${chip}${levelPill(j)}${esc(bikeStr(j))}</div>
+      <div class="meta">Fecha sugerida: <b>${fmtDate(j.nextDate)}</b> · último servicio ${fmtDate(j.date)}</div>
+      <div class="btns">
+        <a class="btn sm" target="_blank" rel="noopener" href="${gcalLink(j)}">Añadir a Google Calendar</a>
+        <button class="btn sm sec2" data-act="ics">.ics</button>
+        <button class="btn sm sec2" data-act="remind">WhatsApp: recordar</button>
+        <button class="btn sm sec2" data-act="dismiss">Descartar</button>
+      </div></div>`;
+  }).join('') : '<div class="empty">No hay servicios próximos. Se crean al registrar un Level 2 o Level 3.</div>';
+}
+$('ups').addEventListener('click', async (e) => {
+  const b = e.target.closest('[data-act]'); if(!b) return;
+  const id = b.closest('.card').dataset.id; const j = (await dbAll()).find(x => x.id === id); if(!j) return;
+  if(b.dataset.act === 'ics') download(new Blob([vcal([vevent(j)])], { type: 'text/calendar' }), `bicifull-${j.clientName.replace(/\W+/g, '-')}-${j.nextDate}.ics`);
+  if(b.dataset.act === 'remind') window.open('https://wa.me/' + waNumber(j.phone) + '?text=' + encodeURIComponent(reminderMsg(j)), '_blank');
+  if(b.dataset.act === 'dismiss'){ j.nextDismissed = true; await dbPut(j); renderUp(); refreshBadge(); }
+});
+$('ics-all').addEventListener('click', async () => {
+  const ups = await upcoming(); if(!ups.length) return toast('No hay servicios próximos');
+  download(new Blob([vcal(ups.map(vevent))], { type: 'text/calendar' }), `bicifull-proximos-${todayISO()}.ics`);
+});
+
+/* ========================================================= PDF */
+const pdfSafe = (s) => String(s ?? '').replace(/[—–]/g, '-').replace(/[“”]/g, '"').replace(/[‘’]/g, "'").replace(/·/g, '|').replace(/[^\x20-\x7E\xA0-\xFF\n]/g, '?');
+let _logo;
+async function getLogo(){
+  if(_logo !== undefined) return _logo;
+  try{
+    const bl = await (await fetch('../images/logo.png')).blob();
+    const d = await new Promise((r, j) => { const fr = new FileReader(); fr.onload = () => r(fr.result); fr.onerror = j; fr.readAsDataURL(bl); });
+    const dim = await new Promise((r, j) => { const i = new Image(); i.onload = () => r({ w: i.width, h: i.height }); i.onerror = j; i.src = d; });
+    _logo = { d, ...dim };
+  } catch(e){ _logo = null; }
+  return _logo;
+}
+async function buildPDF(j){
+  const { jsPDF } = window.jspdf; const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  const W = 210, H = 297, M = 14, S = pdfSafe; let y = 0;
+  const logo = await getLogo();
+  const L = LEVELS[j.level];
+
+  // header
+  doc.setFillColor(18, 18, 18); doc.rect(0, 0, W, 32, 'F');
+  if(logo) doc.addImage(logo.d, 'PNG', M, 8, logo.w * (16 / logo.h), 16);
+  doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(15); doc.text('SERVICE REPORT', W - M, 16, { align: 'right' });
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.setTextColor(170, 170, 170); doc.text('Professional bike care at your doorstep | Abu Dhabi', W - M, 22, { align: 'right' });
+  doc.setFillColor(226, 19, 19); doc.rect(0, 32, W, 1.2, 'F');
+  y = 46;
+
+  const ensure = (h) => { if(y + h > H - 20){ doc.addPage(); y = 22; } };
+  const section = (t, need = 0) => { ensure(16 + need); doc.setFillColor(226, 19, 19); doc.rect(M, y - 3.4, 1.6, 4.8, 'F'); doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.setTextColor(20, 20, 20); doc.text(t.toUpperCase(), M + 4, y); doc.setDrawColor(225, 225, 225); doc.setLineWidth(0.2); doc.line(M, y + 2.6, W - M, y + 2.6); y += 10; };
+  const paragraph = (text, size = 10) => { doc.setFont('helvetica', 'normal'); doc.setFontSize(size); doc.setTextColor(50, 50, 50); const lines = doc.splitTextToSize(S(text), W - 2 * M); lines.forEach(l => { ensure(5.2); doc.text(l, M, y); y += 5; }); y += 2; };
+
+  // info grid
+  const info = [
+    ['CLIENT', j.clientName], ['BIKE', bikeStr(j) + (j.bikeType ? ' (' + j.bikeType + ')' : '')],
+    ['SERVICE', L.name + (j.showPrice && j.value != null ? ' - ' + j.value + ' AED' : '')], ['DATE', fmtDate(j.date)],
+    ['REPORT NO.', 'BC-' + j.id.slice(-6).toUpperCase()], ['NEXT SERVICE', j.nextDate ? fmtDate(j.nextDate) : 'As needed'],
+  ];
+  info.forEach((it, i) => {
+    const x = M + (i % 2) * 94, yy = y + Math.floor(i / 2) * 13;
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(7.5); doc.setTextColor(130, 130, 130); doc.text(it[0], x, yy);
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(11); doc.setTextColor(20, 20, 20); doc.text(S(it[1]).slice(0, 44), x, yy + 5.5);
+  });
+  y += 3 * 13 + 4;
+
+  // photos
+  const B = j.photosBefore || [], A = j.photosAfter || [], n = Math.max(B.length, A.length);
+  if(n){
+    section('Before & after');
+    const fit = (p, x, yy, bw, bh) => {
+      doc.setFillColor(244, 244, 244); doc.rect(x, yy, bw, bh, 'F');
+      const s = Math.min(bw / p.w, bh / p.h), w = p.w * s, h = p.h * s;
+      doc.addImage(p.d, 'JPEG', x + (bw - w) / 2, yy + (bh - h) / 2, w, h);
+    };
+    for(let i = 0; i < n; i++){
+      ensure(72);
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(7.5); doc.setTextColor(226, 19, 19);
+      if(B[i]) doc.text('BEFORE', M, y); if(A[i]) doc.text('AFTER', M + 94, y);
+      y += 2.5;
+      if(B[i]) fit(B[i], M, y, 88, 64); if(A[i]) fit(A[i], M + 94, y, 88, 64);
+      y += 70;
+    }
+  }
+
+  // checklist
+  const items = [...L.items.map(nm => ({ nm, done: !!(j.checklist || {})[nm] })), ...(j.extras || []).map(nm => ({ nm: nm + ' (extra)', done: true }))];
+  const rows = Math.ceil(items.length / 2);
+  section('Service checklist - ' + L.name, rows * 7 + 2);
+  items.forEach((it, i) => {
+    const x = M + (i % 2) * 94, yy = y + Math.floor(i / 2) * 7;
+    doc.setDrawColor(170, 170, 170); doc.setLineWidth(0.3); doc.rect(x, yy - 3.2, 3.8, 3.8);
+    if(it.done){ doc.setDrawColor(226, 19, 19); doc.setLineWidth(0.6); doc.line(x + 0.7, yy - 1.2, x + 1.6, yy - 0.2); doc.line(x + 1.6, yy - 0.2, x + 3.3, yy - 2.7); }
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(9.5); doc.setTextColor(it.done ? 30 : 150, it.done ? 30 : 150, it.done ? 30 : 150); doc.text(S(it.nm).slice(0, 46), x + 6, yy);
+  });
+  y += rows * 7 + 4;
+
+  // conditions
+  const cond = COMPONENTS.filter(c => (j.conditions || {})[c]);
+  if(cond.length){
+    section('Component condition', cond.length * 7.5 + 8);
+    const col = { 'Good': [30, 150, 90], 'Needs attention': [200, 130, 10], 'Requires inspection': [200, 130, 10], 'Inspected': [60, 110, 190], 'Replaced': [60, 110, 190], 'N/A': [130, 130, 130] };
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(130, 130, 130); doc.text('COMPONENT', M, y); doc.text('CONDITION', M + 70, y); y += 3;
+    cond.forEach((c, i) => {
+      ensure(8); if(i % 2 === 0){ doc.setFillColor(248, 248, 248); doc.rect(M, y - 2, W - 2 * M, 7.5, 'F'); }
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(30, 30, 30); doc.text(c, M + 2, y + 3);
+      const v = j.conditions[c], rgb = col[v] || [30, 30, 30]; doc.setFont('helvetica', 'bold'); doc.setTextColor(rgb[0], rgb[1], rgb[2]); doc.text(S(v), M + 70, y + 3); y += 7.5;
+    });
+    y += 5;
+  }
+
+  if(j.parts){ section('Parts used', 12); paragraph(j.parts); }
+  if(j.notes){ section("Mechanic's notes", 14); paragraph(j.notes); }
+
+  // next maintenance
+  const reco = doc.splitTextToSize(S(j.reco || 'As needed, depending on use.'), W - 2 * M - 8);
+  const bh = reco.length * 5 + (j.nextDate ? 9 : 2) + 3;
+  section('Next recommended maintenance', bh + 2);
+  doc.setFillColor(250, 242, 242); doc.setDrawColor(226, 19, 19); doc.setLineWidth(0.3); doc.rect(M, y - 2, W - 2 * M, bh, 'FD');
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(40, 40, 40); let yy = y + 3; reco.forEach(l => { doc.text(l, M + 4, yy); yy += 5; });
+  if(j.nextDate){ doc.setFont('helvetica', 'bold'); doc.setTextColor(226, 19, 19); doc.text('Suggested date: ' + fmtDate(j.nextDate), M + 4, yy + 2); }
+  y += bh + 6;
+
+  // footer on every page
+  const pages = doc.getNumberOfPages();
+  for(let p = 1; p <= pages; p++){
+    doc.setPage(p);
+    if(p > 1){ doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.setTextColor(150, 150, 150); doc.text(S('Bicifull Care | Service report | ' + j.clientName), M, 12); doc.setDrawColor(226, 19, 19); doc.setLineWidth(0.6); doc.line(M, 15, W - M, 15); }
+    doc.setDrawColor(225, 225, 225); doc.setLineWidth(0.2); doc.line(M, H - 15, W - M, H - 15);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(7.8); doc.setTextColor(120, 120, 120);
+    doc.text('Thank you for choosing Bicifull Care  |  bicifullcare.com  |  Instagram @bicifullcare  |  +971 52 795 1828', W / 2, H - 10, { align: 'center' });
+    doc.text(p + ' / ' + pages, W - M, H - 10, { align: 'right' });
+  }
+  const filename = S(`Bicifull-Report_${j.clientName.replace(/\s+/g, '-')}_${j.date}.pdf`).replace(/[^\w.\-]/g, '');
+  return { doc, filename };
+}
+async function makePdf(j, mode){
+  try{
+    toast('Generando PDF…'); const { doc, filename } = await buildPDF(j);
+    if(mode === 'share'){
+      const file = new File([doc.output('blob')], filename, { type: 'application/pdf' });
+      if(navigator.canShare && navigator.canShare({ files: [file] })){ await navigator.share({ files: [file], title: 'Bicifull Care service report', text: thanksMsg(j) }); return; }
+    }
+    doc.save(filename); toast('PDF listo');
+  } catch(err){ if(err.name !== 'AbortError'){ toast('Error al crear el PDF'); console.error(err); } }
+}
+
+/* ========================================================= settings / backup */
+function loadSettings(){ $('s-review').value = getSettings().review || ''; }
+$('s-save').addEventListener('click', () => { setSettings({ ...getSettings(), review: $('s-review').value.trim() }); toast('Ajustes guardados'); });
+$('exp').addEventListener('click', async () => {
+  const data = { app: 'bicifull-admin', version: 1, exportedAt: new Date().toISOString(), settings: getSettings(), jobs: await dbAll() };
+  download(new Blob([JSON.stringify(data)], { type: 'application/json' }), `bicifull-backup-${todayISO()}.json`);
+  localStorage.setItem('bfc_last_backup', String(Date.now())); refreshBadge(); toast('Copia exportada');
+});
+$('imp').addEventListener('change', async (e) => {
+  const f = e.target.files[0]; if(!f) return;
+  try{
+    const d = JSON.parse(await f.text()); if(d.app !== 'bicifull-admin' || !Array.isArray(d.jobs)) throw new Error('Archivo no válido');
+    for(const j of d.jobs) await dbPut(j);
+    if(d.settings) setSettings({ ...d.settings, ...getSettings() });
+    toast(`Importados ${d.jobs.length} trabajos`); refreshBadge();
+  } catch(err){ toast('Error: ' + err.message); }
+  e.target.value = '';
+});
+$('pw-save').addEventListener('click', async () => {
+  $('pw-err').textContent = '';
+  const a = JSON.parse(localStorage.getItem(AUTH_KEY)); const np = $('pw-new').value;
+  if(await derive($('pw-old').value, a.salt) !== a.hash) return $('pw-err').textContent = 'La contraseña actual no es correcta.';
+  if(np.length < 6) return $('pw-err').textContent = 'La nueva contraseña debe tener al menos 6 caracteres.';
+  const salt = b64(crypto.getRandomValues(new Uint8Array(16)));
+  localStorage.setItem(AUTH_KEY, JSON.stringify({ user: a.user, salt, hash: await derive(np, salt) }));
+  $('pw-old').value = ''; $('pw-new').value = ''; toast('Contraseña cambiada');
+});
+$('wipe').addEventListener('click', async () => {
+  if(prompt('Esto borra TODOS los trabajos y fotos de este dispositivo. Escribe BORRAR para confirmar:') === 'BORRAR'){ await dbClear(); toast('Registros borrados'); refreshBadge(); }
+});
+
+/* ========================================================= boot */
+async function enterApp(){
+  $('lock').hidden = true; $('app').hidden = false;
+  if(!enterApp.done){ buildStaticForm(); enterApp.done = true; }
+  await refreshBadge(); showTab('new');
+}
+(async function boot(){
+  try{
+    await openDB();
+    if(localStorage.getItem(AUTH_KEY) && sessionStorage.getItem('bfc_unlocked') === '1') await enterApp(); else lockMode();
+  } catch(err){ document.body.innerHTML = '<p style="padding:30px">No se pudo iniciar el panel: ' + esc(err.message) + '</p>'; }
+})();
+</script>
+</body>
+</html>

@@ -296,20 +296,6 @@
   .adv-result p.adv-note{color:var(--fg-dim);font-size:13.5px;}
   .adv-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
   .adv-actions .btn{text-decoration:none;}
-  .report-card{background:#000;border:1px solid var(--line);border-radius:8px;padding:22px 20px;max-width:560px;}
-  .rc-top{display:flex;justify-content:space-between;align-items:center;gap:10px;}
-  .rc-brand{font-family:'Jost',sans-serif;font-weight:600;font-size:13px;letter-spacing:.06em;color:#fff;}
-  .rc-pill{font-size:11px;font-weight:600;color:#3ddc84;background:rgba(61,220,132,.12);padding:3px 10px;border-radius:20px;}
-  .rc-title{font-family:'Jost',sans-serif;font-size:20px;font-weight:600;color:#fff;margin-top:14px;}
-  body.lang-ar .rc-title, body.lang-ar .rc-brand{font-family:'Cairo',sans-serif;}
-  .rc-sample{font-size:11.5px;color:var(--fg-dim);margin-top:2px;}
-  .report-card table{width:100%;border-collapse:collapse;margin-top:16px;font-size:13.5px;}
-  .report-card th{text-align:start;font-size:12px;color:var(--fg-dim);font-weight:600;padding:8px 0;}
-  .report-card td{padding:9px 0;border-top:1px solid var(--line);color:#e9e7e3;}
-  .report-card td.ok{color:#3ddc84;} .report-card td.warn{color:#f5b942;} .report-card td.info{color:#7db7ff;}
-  .rc-notes{margin-top:16px;font-size:13px;}
-  .rc-notes strong{color:#fff;display:block;}
-  .rc-notes p{margin:4px 0 0;color:var(--fg-dim);}
   .faq{max-width:720px;}
   .faq-item{border-top:1px solid var(--line);padding:0;}
   .faq-item:last-child{border-bottom:1px solid var(--line);}
@@ -319,6 +305,8 @@
   .faq-item[open] summary::after{content:"\2212";}
   .faq-item p{margin:0 0 18px;font-size:14.5px;line-height:1.7;color:#d8d6d2;}
   @media(max-width:520px){ .hero h1{font-size:40px;} }
+  .avail-note{display:flex;gap:10px;align-items:flex-start;margin:24px 0 0;padding:12px 14px;border:1px solid rgba(245,185,66,.4);background:rgba(245,185,66,.08);border-radius:4px;font-size:13.5px;line-height:1.5;color:#f5d98a;}
+  .hint-line{font-size:12.5px;color:#f5d98a;margin-top:6px;}
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -420,8 +408,13 @@ src="https://www.facebook.com/tr?id=1574384623528579&ev=PageView&noscript=1"
 
 <div class="wrap">
 
+  <div class="avail-note" id="avail-note" hidden>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="flex:0 0 auto;margin-top:1px"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+    <span id="avail-text"></span>
+  </div>
+
   <div class="stats-strip reveal">
-    <div><span class="num">50+</span><span class="lbl"><span class="lang-block" data-lang="en">Bikes serviced</span><span class="lang-block" data-lang="ar" hidden>دراجة تمت صيانتها</span></span></div>
+    <div><span class="num">70+</span><span class="lbl"><span class="lang-block" data-lang="en">Bikes serviced</span><span class="lang-block" data-lang="ar" hidden>دراجة تمت صيانتها</span></span></div>
     <div><span class="num">45+</span><span class="lbl"><span class="lang-block" data-lang="en">Certifications</span><span class="lang-block" data-lang="ar" hidden>شهادة</span></span></div>
     <div><span class="num">100%</span><span class="lbl"><span class="lang-block" data-lang="en">Home service</span><span class="lang-block" data-lang="ar" hidden>خدمة منزلية</span></span></div>
   </div>
@@ -566,35 +559,14 @@ src="https://www.facebook.com/tr?id=1574384623528579&ev=PageView&noscript=1"
   <hr class="divider">
 
   <!-- GALLERY -->
-  <section class="block" id="advisor">
-    <div class="section-head reveal">
-      <span class="lang-block section-eyebrow" data-lang="en">Not sure?</span><span class="lang-block section-eyebrow" data-lang="ar" hidden>لست متأكداً؟</span>
-      <h2 class="lang-block" data-lang="en">Which service does my bike need?</h2><h2 class="lang-block" data-lang="ar" hidden>ما الخدمة التي تحتاجها دراجتي؟</h2>
-      <p class="lang-block" data-lang="en">Tell us what you're noticing and get a recommendation. Then send us a message in one tap.</p><p class="lang-block" data-lang="ar" hidden>أخبرنا بما تلاحظه واحصل على توصية. ثم أرسل لنا رسالة بنقرة واحدة.</p>
-    </div>
-    <div class="advisor reveal">
-      <div class="adv-step">
-        <div class="adv-label"><span class="lang-block" data-lang="en">1 · What are you noticing?</span><span class="lang-block" data-lang="ar" hidden>1 · ماذا تلاحظ؟</span></div>
-        <div class="adv-chips" id="adv-symptoms"></div>
-      </div>
-      <div class="adv-step">
-        <div class="adv-label"><span class="lang-block" data-lang="en">2 · When was its last full service?</span><span class="lang-block" data-lang="ar" hidden>2 · متى كانت آخر صيانة كاملة؟</span></div>
-        <div class="adv-chips" id="adv-last"></div>
-      </div>
-      <div class="adv-result" id="adv-result" hidden></div>
-    </div>
-  </section>
-
-  <hr class="divider">
-
   <section class="block" id="gallery">
     <div class="section-head reveal">
       <span class="section-eyebrow lang-block" data-lang="en">Portfolio</span>
       <span class="section-eyebrow lang-block" data-lang="ar" hidden>أعمالنا</span>
       <h2 class="lang-block" data-lang="en">Real bikes. Real work.</h2>
       <h2 class="lang-block" data-lang="ar" hidden>دراجات حقيقية. عمل حقيقي.</h2>
-      <p class="lang-block" data-lang="en">50+ bikes serviced across Abu Dhabi — see the full before/after gallery.</p>
-      <p class="lang-block" data-lang="ar" hidden>أكثر من 50 دراجة تمت صيانتها في أبوظبي — شاهد معرض الصور كاملاً.</p>
+      <p class="lang-block" data-lang="en">70+ bikes serviced across Abu Dhabi — see the full before/after gallery.</p>
+      <p class="lang-block" data-lang="ar" hidden>أكثر من 70 دراجة تمت صيانتها في أبوظبي — شاهد معرض الصور كاملاً.</p>
     </div>
     <a href="portfolio/" class="gallery-teaser reveal">
       <div class="gt-grid">
@@ -659,28 +631,22 @@ src="https://www.facebook.com/tr?id=1574384623528579&ev=PageView&noscript=1"
   <hr class="divider">
 
   <!-- CUSTOM REQUEST -->
-  <section class="block" id="report">
+  <section class="block" id="advisor">
     <div class="section-head reveal">
-      <span class="lang-block section-eyebrow" data-lang="en">After every service</span><span class="lang-block section-eyebrow" data-lang="ar" hidden>بعد كل خدمة</span>
-      <h2 class="lang-block" data-lang="en">A digital inspection report</h2><h2 class="lang-block" data-lang="ar" hidden>تقرير فحص رقمي</h2>
-      <p class="lang-block" data-lang="en">You receive a clear PDF with before &amp; after photos, the checklist of everything done, the condition of key components and your next recommended maintenance.</p><p class="lang-block" data-lang="ar" hidden>تحصل على ملف PDF واضح يتضمن صور قبل وبعد، وقائمة بكل ما تم تنفيذه، وحالة المكونات الرئيسية، وموعد الصيانة القادمة الموصى به.</p>
+      <span class="lang-block section-eyebrow" data-lang="en">Not sure?</span><span class="lang-block section-eyebrow" data-lang="ar" hidden>لست متأكداً؟</span>
+      <h2 class="lang-block" data-lang="en">Which service does my bike need?</h2><h2 class="lang-block" data-lang="ar" hidden>ما الخدمة التي تحتاجها دراجتي؟</h2>
+      <p class="lang-block" data-lang="en">Tell us what you're noticing and get a recommendation. Then send us a message in one tap.</p><p class="lang-block" data-lang="ar" hidden>أخبرنا بما تلاحظه واحصل على توصية. ثم أرسل لنا رسالة بنقرة واحدة.</p>
     </div>
-    <div class="report-card reveal">
-      <div class="rc-top"><span class="rc-brand">BICIFULL CARE</span><span class="rc-pill"><span class="lang-block" data-lang="en">Service completed</span><span class="lang-block" data-lang="ar" hidden>اكتملت الخدمة</span></span></div>
-      <div class="rc-title"><span class="lang-block" data-lang="en">Bicycle Inspection Report</span><span class="lang-block" data-lang="ar" hidden>تقرير فحص الدراجة</span></div>
-      <div class="rc-sample"><span class="lang-block" data-lang="en">Sample report format.</span><span class="lang-block" data-lang="ar" hidden>نموذج لشكل التقرير.</span></div>
-      <table>
-        <thead><tr><th><span class="lang-block" data-lang="en">Component</span><span class="lang-block" data-lang="ar" hidden>المكوّن</span></th><th><span class="lang-block" data-lang="en">Condition</span><span class="lang-block" data-lang="ar" hidden>الحالة</span></th></tr></thead>
-        <tbody>
-          <tr><td><span class="lang-block" data-lang="en">Brakes</span><span class="lang-block" data-lang="ar" hidden>الفرامل</span></td><td class="ok"><span class="lang-block" data-lang="en">Good</span><span class="lang-block" data-lang="ar" hidden>جيدة</span></td></tr>
-          <tr><td><span class="lang-block" data-lang="en">Drivetrain</span><span class="lang-block" data-lang="ar" hidden>نقل الحركة</span></td><td class="warn"><span class="lang-block" data-lang="en">Needs attention</span><span class="lang-block" data-lang="ar" hidden>تحتاج انتباهاً</span></td></tr>
-          <tr><td><span class="lang-block" data-lang="en">Tires</span><span class="lang-block" data-lang="ar" hidden>الإطارات</span></td><td class="ok"><span class="lang-block" data-lang="en">Good</span><span class="lang-block" data-lang="ar" hidden>جيدة</span></td></tr>
-          <tr><td><span class="lang-block" data-lang="en">Bearings</span><span class="lang-block" data-lang="ar" hidden>المحامل</span></td><td class="info"><span class="lang-block" data-lang="en">Inspected</span><span class="lang-block" data-lang="ar" hidden>تم فحصها</span></td></tr>
-          <tr><td><span class="lang-block" data-lang="en">Suspension</span><span class="lang-block" data-lang="ar" hidden>التعليق</span></td><td class="warn"><span class="lang-block" data-lang="en">Requires inspection</span><span class="lang-block" data-lang="ar" hidden>تتطلب فحصاً</span></td></tr>
-        </tbody>
-      </table>
-      <div class="rc-notes"><strong><span class="lang-block" data-lang="en">Mechanic's notes</span><span class="lang-block" data-lang="ar" hidden>ملاحظات الميكانيكي</span></strong><p><span class="lang-block" data-lang="en">Observations, work performed and recommendations.</span><span class="lang-block" data-lang="ar" hidden>الملاحظات والأعمال المنفذة والتوصيات.</span></p></div>
-      <div class="rc-notes"><strong><span class="lang-block" data-lang="en">Next recommended maintenance</span><span class="lang-block" data-lang="ar" hidden>الصيانة القادمة الموصى بها</span></strong><p><span class="lang-block" data-lang="en">Suggested date based on your riding and real conditions.</span><span class="lang-block" data-lang="ar" hidden>موعد مقترح بحسب استخدامك والظروف الفعلية.</span></p></div>
+    <div class="advisor reveal">
+      <div class="adv-step">
+        <div class="adv-label"><span class="lang-block" data-lang="en">1 · What are you noticing?</span><span class="lang-block" data-lang="ar" hidden>1 · ماذا تلاحظ؟</span></div>
+        <div class="adv-chips" id="adv-symptoms"></div>
+      </div>
+      <div class="adv-step">
+        <div class="adv-label"><span class="lang-block" data-lang="en">2 · When was its last full service?</span><span class="lang-block" data-lang="ar" hidden>2 · متى كانت آخر صيانة كاملة؟</span></div>
+        <div class="adv-chips" id="adv-last"></div>
+      </div>
+      <div class="adv-result" id="adv-result" hidden></div>
     </div>
   </section>
 
@@ -720,6 +686,7 @@ src="https://www.facebook.com/tr?id=1574384623528579&ev=PageView&noscript=1"
         <label class="lang-block" data-lang="en">Preferred date (optional)</label>
         <label class="lang-block" data-lang="ar" hidden>التاريخ المفضل (اختياري)</label>
         <input type="date" id="f-date">
+        <div class="hint-line" id="f-date-hint" hidden></div>
       </div>
       <div class="field">
         <label class="lang-block" data-lang="en">Preferred time (optional)</label>
@@ -976,6 +943,47 @@ src="https://www.facebook.com/tr?id=1574384623528579&ev=PageView&noscript=1"
   document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 
 
+
+  /* ---------- Availability: fully booked periods (edit or add ranges here) ---------- */
+  const BOOKED_RANGES = [ { from: '2026-11-16', to: '2026-11-30' } ];
+  function localISO(d){ const p = n => String(n).padStart(2, '0'); return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`; }
+  function addDaysISO(iso, n){ const d = new Date(iso + 'T12:00:00'); d.setDate(d.getDate() + n); return localISO(d); }
+  function activeBooked(){ const t = localISO(new Date()); return BOOKED_RANGES.filter(r => r.to >= t); }
+  function isBooked(iso){ return BOOKED_RANGES.some(r => iso >= r.from && iso <= r.to); }
+  function firstAvailableISO(){
+    let d = localISO(new Date()), moved = true;
+    while(moved){ moved = false; for(const r of BOOKED_RANGES){ if(d >= r.from && d <= r.to){ d = addDaysISO(r.to, 1); moved = true; } } }
+    return d;
+  }
+  function renderAvailability(){
+    const box = document.getElementById('avail-note'), hint = document.getElementById('f-date-hint');
+    const act = activeBooked(), L = currentLang;
+    const fmt = (iso) => new Date(iso + 'T12:00:00').toLocaleDateString(L === 'ar' ? 'ar-AE-u-nu-latn' : 'en-GB', { day:'numeric', month:'short' });
+    if(box){
+      if(!act.length){ box.hidden = true; }
+      else {
+        const r = act[0], open = fmt(addDaysISO(r.to, 1));
+        document.getElementById('avail-text').textContent = L === 'ar'
+          ? `جدولنا محجوز بالكامل من ${fmt(r.from)} إلى ${fmt(r.to)}. تفتح الحجوزات من ${open}. راسلنا لحجز موعدك.`
+          : `Fully booked ${fmt(r.from)} to ${fmt(r.to)}. Bookings reopen ${open}. Message us to reserve your slot.`;
+        box.hidden = false;
+      }
+    }
+    if(hint){
+      if(isBooked(localISO(new Date()))){
+        hint.textContent = L === 'ar' ? `أقرب موعد متاح: ${fmt(firstAvailableISO())}` : `Earliest available date: ${fmt(firstAvailableISO())}`;
+        hint.hidden = false;
+      } else hint.hidden = true;
+    }
+    validatePrefDate();
+  }
+  function validatePrefDate(){
+    const d = document.getElementById('f-date'); if(!d) return;
+    d.setCustomValidity(d.value && isBooked(d.value)
+      ? (currentLang === 'ar' ? 'هذا التاريخ محجوز بالكامل، يرجى اختيار تاريخ آخر.' : 'This date is fully booked, please choose another date.') : '');
+  }
+  { const fd = document.getElementById('f-date'); if(fd){ fd.addEventListener('input', validatePrefDate); fd.addEventListener('change', validatePrefDate); } }
+
   /* ---------- Time options for the booking form ---------- */
   const TIME_OPTIONS = [
     { value: "morning",   en: "Morning",   ar: "صباحاً" },
@@ -990,7 +998,8 @@ src="https://www.facebook.com/tr?id=1574384623528579&ev=PageView&noscript=1"
     sel.innerHTML = `<option value="">${currentLang==='ar' ? 'اختر الوقت…' : 'Select a time…'}</option>` +
       TIME_OPTIONS.map(o => `<option value="${o.value}" ${o.value===prev?'selected':''}>${o[currentLang]}</option>`).join('');
     const d = document.getElementById('f-date');
-    if(d && !d.min) d.min = new Date().toISOString().slice(0,10);
+    if(d){ d.min = firstAvailableISO(); }
+    renderAvailability();
   }
 
   /* ---------- "Which service does my bike need?" ---------- */
